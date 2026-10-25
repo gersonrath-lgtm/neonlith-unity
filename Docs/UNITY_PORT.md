@@ -206,6 +206,20 @@ erfahrenen Unity-Entwickler in Personenwochen (PW); sie dienen der Reihenfolge, 
 
 Zusammen grob 24 Personenwochen. Etappe 0 bis 2 brauchen keine Brille.
 
+## 7a. Stand der Parität (Ende der ersten Sitzung)
+
+Portiert (Logik und Ablauf, Darstellung aus einfachen Formen): Balance, Kampf, Gegner mit allen Fähigkeiten, Eliten
+und Bossen, Türme, Sperren, Bauen per Strahl, Arsenal mit Ladeschuss und Vordergriff, Nachschub und Flugaliens,
+Segenskarten, Fertigkeitsbäume mit Kernsplittern, Spielstand und Sterne, Tutorial, Funk, Drohne Gizmo, Wetter,
+Zonen, Halle der Tore mit Missionswahl, Pausenmenü und Einstellungen, Ladeschleier, Schadenszahlen, Gegner-Info,
+Foveation, 90 Hz, AutoRes, ein eigener Neon-Shader mit Fernberuhigung.
+
+Noch offen: die reichen Modelle aus Code (TowerModels, WeaponModels, RobotModels, EnemyShapes, Rook als Figur),
+die übrigen Shader (Surface mit Facetten und Metall, Holo-System, Himmel, Gegner-Laufanimation), die volle Brücke
+(BridgeKit-Varianten, Unterbau, Band), Statustafel und Armband, Kombo und Zeitlupe, Endlosmodus und Feldzug,
+Absturzbericht, Composition Layers, Vorwärmen der Shader. Alles ist ohne Unity-Editor geschrieben und muss im
+Cloud-Build (GameCI) und in der Brille geprüft werden.
+
 ## 8. Was nicht kopierbar ist (und was stattdessen)
 
 - **Netze aus Code (36 Skripte).** Türme, Waffen, Rook, Brücken, Terrain, Schwärme entstehen zur Laufzeit. Das

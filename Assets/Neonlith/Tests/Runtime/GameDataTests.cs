@@ -79,6 +79,38 @@ namespace Neonlith.Tests
         }
 
         [Test]
+        public void ZonesAndFeaturesParsed()
+        {
+            var m5 = MissionData.Load(5);
+            Assert.Greater(m5.zones.Count, 0, "Mission 5 hat Tempozonen");
+            Assert.IsTrue(m5.features.Contains("supply") && m5.features.Contains("raid"));
+            Assert.AreEqual(0, MissionData.Load(1).zones.Count);
+        }
+
+        [Test]
+        public void SkillTreesMatchGodot()
+        {
+            Assert.AreEqual(8, Neonlith.Game.SkillTrees.Trees.Count);
+            var arrow = Neonlith.Game.SkillTrees.Trees["arrow"];
+            Assert.AreEqual(8, arrow.nodes.Count);
+            Assert.AreEqual(3, arrow.nodes[0].Ranks);
+            Assert.AreEqual("A_heavy", arrow.nodes[2].id);
+            Assert.AreEqual(40, arrow.nodes[4].cost[0]);
+            var st = new System.Collections.Generic.Dictionary<string, float>(Balance.Stats("arrow", 0));
+            Neonlith.Game.SkillTrees.Apply("arrow", st, new System.Collections.Generic.Dictionary<string, float> { ["dmg"] = 0.25f, ["targets_add"] = 1 }, new System.Collections.Generic.Dictionary<string, float>());
+            Assert.AreEqual(17.5f, st["damage"], 0.01f);
+            Assert.AreEqual(2f, st["targets"], 0.01f);
+        }
+
+        [Test]
+        public void BoonCardsComplete()
+        {
+            Assert.AreEqual(25, Neonlith.Game.Boons.Cards.Count);
+            Assert.IsTrue(Neonlith.Game.Boons.OfferAfter(2, 8));
+            Assert.IsFalse(Neonlith.Game.Boons.OfferAfter(7, 8), "nicht nach der letzten Welle");
+        }
+
+        [Test]
         public void ConfigsConverted()
         {
             Assert.IsNotNull(GameData.Config("weapon"));

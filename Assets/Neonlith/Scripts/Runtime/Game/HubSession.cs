@@ -56,7 +56,7 @@ namespace Neonlith.Game
             h.rig = rig;
             h.Build();
             h._music = go.AddComponent<AudioSource>();
-            h._music.loop = true; h._music.volume = 0.45f;
+            h._music.loop = true; h._music.volume = 0.45f * Progress.MusicVolume;
             var clip = Resources.Load<AudioClip>("Audio/Music/theme_menu");
             if (clip != null) { h._music.clip = clip; h._music.Play(); }
             var amb = Resources.Load<AudioClip>("Audio/SFX/amb_hall");
@@ -65,7 +65,8 @@ namespace Neonlith.Game
         }
 
         public void Say(string text, float secs) { message = text; messageUntil = Time.time + secs; }
-        public void Sfx(string name, float vol) { var c = Resources.Load<AudioClip>("Audio/SFX/" + name); if (c != null) AudioSource.PlayClipAtPoint(c, rig.head.transform.position, vol); }
+        public void Sfx(string name, float vol) { var c = Resources.Load<AudioClip>("Audio/SFX/" + name); if (c != null) AudioSource.PlayClipAtPoint(c, rig.head.transform.position, vol * Progress.SfxVolume); }
+        public void ApplyVolumes() { if (_music != null) _music.volume = 0.45f * Progress.MusicVolume; }
 
         // ------------------------------------------------------------------------------------------------
         void Build()

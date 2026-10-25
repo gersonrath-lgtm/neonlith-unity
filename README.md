@@ -51,6 +51,9 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
 - **Karte**: Tempozonen (schnell, langsam) und Engstellen der Missionen 4, 5, 9, 10, 14, 15, 19, 20; Wände als
   Aufstiege. Wetter je Mission (Wind, Niesel, Nebel, Regen, Gewitter, Sturm): Partikel um den Spieler, Sichtweite,
   Blitze mit Donner, Klangkulisse.
+- **Anzeigen**: Schadenszahlen am Gegner (kritisch größer, Brand orange), Gegner-Info beim Zeigen (Name, Rolle,
+  Leben, Rüstung, Schild, Schwäche, Elite), Einstellungen (Musik, Effekte, Drehen in Stufen oder stufenlos,
+  Einführung wiederholen).
 - **Hände**: Roboterhände über den Controllern (Finger beugen sich mit Abzug und Griff) und Unterarme.
 - **Halle der Tore**: Start in der Nabe mit vier Toren (Norden I bis Westen IV, offen mit Fenster und Balkon,
   verschlossen mit Schloss in der Weltfarbe), Zeigen hebt hervor, Abzug gleitet hindurch; auf dem Balkon die fünf

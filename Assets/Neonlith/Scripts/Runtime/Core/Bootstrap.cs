@@ -71,6 +71,7 @@ namespace Neonlith
             XRHandVisual.Create(Rig.leftHand, Rig.head.transform, true, XRInput.LeftHanded, theme);
             XRHandVisual.Create(Rig.rightHand, Rig.head.transform, false, !XRInput.LeftHanded, theme);
             Hud.Create(Session, pw, Rig.head.transform);
+            DamageNumbers.Create(Rig.head.transform);
             LoadVeil.Create(Rig.head.transform);
 
             Debug.Log($"Neonlith: Mission {mission} „{Mission.name}“, Welt {theme.name}, {Mission.waves.Count} Wellen, {Mission.paths.Count} Wege, {Mission.pads.Count} Bauplätze, Deck bei {Mission.deckTop}");

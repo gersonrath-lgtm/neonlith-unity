@@ -124,6 +124,16 @@ namespace Neonlith.Data
         };
 
         public static EnemyType Enemy(string id) => Enemies.TryGetValue(id, out var e) ? e : Enemies["mist_walker"];
+        /// <summary>Rolle je Gegnerart (Balance.ENEMIES "role") für die Gegner-Info.</summary>
+        public static readonly Dictionary<string, string> EnemyRole = new Dictionary<string, string>
+        {
+            ["mist_walker"] = "Standardgegner", ["skitter"] = "Schnell, sprintet los, wenn er getroffen wird", ["flicker_swarm"] = "Klein, schnell, in riesigen Gruppen",
+            ["mist_colossus"] = "Tank, schirmt die Gegner hinter sich ab", ["cube"] = "Standardgegner des Schwarms", ["dart"] = "Schnell und zerbrechlich",
+            ["block"] = "Langsam, massiv, gepanzert", ["spotter"] = "Markiert Türme, die dann kurz ausfallen", ["carrier"] = "Platzt und lässt Schwärmer frei",
+            ["mist_weaver"] = "Heilt Verbündete in der Nähe", ["glass_angel"] = "Fliegt schnell – Raketenwerfer treffen ihn nicht",
+            ["boss_orun"] = "Boss · Panzerkoloss", ["boss_orun_minor"] = "Zwischenboss · Riesen-Schilder", ["boss_brood"] = "Boss · ruft Schwärmer und Packträger",
+            ["boss_vey"] = "Boss · Schwarmmutter", ["boss_kael"] = "Boss · Eispanzer",
+        };
         public static StructureType Structure(string id) => Structures.TryGetValue(id, out var s) ? s : null;
         public static bool IsTrap(string id) => Structures.TryGetValue(id, out var s) && s.IsTrap;
         public static bool IsDefense(string id) => Structures.TryGetValue(id, out var s) && s.IsDefense;

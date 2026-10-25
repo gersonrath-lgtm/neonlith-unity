@@ -200,6 +200,9 @@ namespace Neonlith.Data
         /// <summary>Welten, deren letzte Mission gewonnen ist (für die Waffenfreischaltung: Mission 5, 10, 15).</summary>
         public static int WorldsDone() { var w = 0; for (var n = 5; n <= 20; n += 5) if (Won(n)) w++; return w; }
 
+        public static float MusicVolume { get => Data["music"]?.Value<float>() ?? 0.7f; set { Data["music"] = Mathf.Clamp01(value); Save(); } }
+        public static float SfxVolume { get => Data["sfx"]?.Value<float>() ?? 0.8f; set { Data["sfx"] = Mathf.Clamp01(value); Save(); } }
+        public static bool SnapTurn { get => Data["snap_turn"]?.Value<bool>() ?? true; set { Data["snap_turn"] = value; Save(); } }
         public static string Weapon { get => (string)Data["weapon"] ?? "pistol"; set { Data["weapon"] = value; Save(); } }
         public static bool LeftHanded { get => Data["left_handed"]?.Value<bool>() ?? false; set { Data["left_handed"] = value; Save(); } }
         public static int Shards => Data["shards"]?.Value<int>() ?? 0;

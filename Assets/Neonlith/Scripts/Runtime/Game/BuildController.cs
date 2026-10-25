@@ -28,6 +28,8 @@ namespace Neonlith.Game
         bool _trigLatch, _bLatch, _aLatch, _buildMode;
         MenuPanel.Button _hover;
         Material _rayIdle, _rayHot;
+        TextMesh _enemyInfo;
+        Enemy _infoEnemy;
 
         public static BuildController Create(GameSession s, MissionData m, Transform hand, Transform head, WorldTheme theme)
         {
@@ -86,17 +88,20 @@ namespace Neonlith.Game
             var end = origin + dir * 60f;
             _hover = null;
             BuildPad hitPad = null; Tower hitTower = null;
-            var mask = (1 << GameSession.PadLayer) | (1 << GameSession.TowerLayer) | (1 << GameSession.MenuLayer);
+            var mask = (1 << GameSession.PadLayer) | (1 << GameSession.TowerLayer) | (1 << GameSession.MenuLayer) | (1 << GameSession.EnemyLayer);
+            Enemy hitEnemy = null;
             if (Physics.Raycast(origin, dir, out var hit, 60f, mask, QueryTriggerInteraction.Collide))
             {
                 end = hit.point;
+                if (hit.collider.gameObject.layer == GameSession.EnemyLayer) hitEnemy = hit.collider.GetComponentInParent<Enemy>();
                 if (hit.collider.gameObject.layer == GameSession.MenuLayer) _hover = MenuPanel.Find(hit.collider.gameObject);
                 else if (_padBy.TryGetValue(hit.collider, out var p)) hitPad = p.tower != null ? null : p;
                 if (hit.collider.gameObject.layer == GameSession.TowerLayer) hitTower = hit.collider.GetComponentInParent<Tower>();
             }
             else if (Physics.Raycast(origin, dir, out var any, 60f, ~(1 << GameSession.EnemyLayer), QueryTriggerInteraction.Ignore)) end = any.point;
             _ray.SetPosition(0, origin); _ray.SetPosition(1, end);
-            _ray.sharedMaterial = (_hover != null || hitPad != null || hitTower != null) ? _rayHot : _rayIdle;
+            _ray.sharedMaterial = (_hover != null || hitPad != null || hitTower != null || hitEnemy != null) ? _rayHot : _rayIdle;
+            EnemyInfo(hitEnemy);
 
             // Bauplätze zeigen: im Bau-Modus alle, sonst nur nahe am Strahl
             foreach (var kv in _padBy)
@@ -121,6 +126,33 @@ namespace Neonlith.Game
             }
             _trigLatch = trig;
             _menu?.Face(head);
+        }
+
+        /// <summary>Gegner-Info über dem Gegner unter dem Strahl (XREnemyPanel, Bestiary): Name, Rolle, Leben, Rüstung, Schwäche, Elite.</summary>
+        void EnemyInfo(Enemy e)
+        {
+            if (e != null && e.alive)
+            {
+                if (_enemyInfo == null) _enemyInfo = MenuPanel.Text(transform, "", Vector3.zero, 0.03f, new Color(0.92f, 0.92f, 0.94f));
+                _infoEnemy = e;
+                var role = Balance.EnemyRole.TryGetValue(e.type.id, out var r) ? r : "";
+                var el = e.elite.Length > 0 && Balance.Elites.TryGetValue(e.elite, out var et) ? $"\n{et.name}: {et.text}" : "";
+                _enemyInfo.text = MenuPanel.Wrap($"{e.type.name}  ·  {role}\nLeben {Mathf.CeilToInt(e.hp)} / {Mathf.CeilToInt(e.maxHp)}   Rüstung {Combat.EffectiveArmor(e):0}{(e.shield > 0f ? $"   Schild {Mathf.CeilToInt(e.shield)}" : "")}\n{e.type.weakShort}{el}", 46);
+                _enemyInfo.gameObject.SetActive(true);
+            }
+            else if (_enemyInfo != null && (_infoEnemy == null || !_infoEnemy.alive || e == null))
+            {
+                _enemyInfo.gameObject.SetActive(false);
+                _infoEnemy = null;
+            }
+            if (_enemyInfo != null && _enemyInfo.gameObject.activeSelf && _infoEnemy != null && head != null)
+            {
+                var p = _infoEnemy.Center + Vector3.up * 1.0f;
+                _enemyInfo.transform.position = p;
+                _enemyInfo.transform.rotation = Quaternion.LookRotation(p - head.position, Vector3.up);
+                var d = Mathf.Max(3f, Vector3.Distance(p, head.position));
+                _enemyInfo.characterSize = 0.03f * 0.08f * (d / 3f);
+            }
         }
 
         void OpenBuildMenu(BuildPad pad)

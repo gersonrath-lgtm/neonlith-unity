@@ -66,8 +66,23 @@ namespace Neonlith.UI
                 ($"Basis: Fertigkeiten ({Progress.Shards} {Progress.Currency})", OpenBase, true),
                 ("Waffe: " + CurrentArmName(), CycleWeapon, true),
                 ("Waffenhand: " + (XRInput.LeftHanded ? "links" : "rechts"), ToggleHand, true),
+                ("Einstellungen", OpenSettings, true),
             });
             Show(session != null ? "Pause" : "Halle der Tore", rows);
+        }
+
+        /// <summary>Einstellungen (Settings in Godot, das Nötige): Musik, Effekte, Drehen, Einführung.</summary>
+        void OpenSettings()
+        {
+            Close();
+            _panel = MenuPanel.Show(Spot(), "Einstellungen", new List<(string, System.Action, bool)>
+            {
+                ($"Musik: {Mathf.RoundToInt(Progress.MusicVolume * 100f)} %", () => { Progress.MusicVolume = (Progress.MusicVolume + 0.1f) > 1.01f ? 0f : Progress.MusicVolume + 0.1f; session?.ApplyVolumes(); HubSession.Instance?.ApplyVolumes(); OpenSettings(); }, true),
+                ($"Effekte: {Mathf.RoundToInt(Progress.SfxVolume * 100f)} %", () => { Progress.SfxVolume = (Progress.SfxVolume + 0.1f) > 1.01f ? 0f : Progress.SfxVolume + 0.1f; Sound("ui_click", 0.6f); OpenSettings(); }, true),
+                ("Drehen: " + (Progress.SnapTurn ? "Stufen von 30°" : "stufenlos"), () => { Progress.SnapTurn = !Progress.SnapTurn; OpenSettings(); }, true),
+                ("Einführung beim nächsten Start von Mission 1 wiederholen", () => { Progress.Data["tutorial_done"] = false; Progress.Save(); Notify("Einführung wird wiederholt", 2f); OpenSettings(); }, true),
+                ("Zurück", Reopen, true),
+            }, 2.0f, 1);
         }
 
         /// <summary>Basis (VRSkillWall): Bäume wählen, Knoten kaufen, Pfad zurücksetzen.</summary>

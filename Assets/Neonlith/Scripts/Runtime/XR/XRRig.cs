@@ -16,6 +16,7 @@ namespace Neonlith.XR
     {
         public const float WalkSpeed = 2.2f;      // XRStand.WALK_SPEED
         public const float TurnSnapDeg = 30f;     // XRStand.TURN_SNAP_DEG
+        public const float TurnSmoothDeg = 100f;  // XRStand.TURN_SMOOTH_DEG: stufenlos, Grad je Sekunde bei vollem Ausschlag
 
         public Camera head;
         public Transform leftHand, rightHand;
@@ -131,6 +132,11 @@ namespace Neonlith.XR
         void Turn()
         {
             var x = XRInput.TurnStick.x;
+            if (!Data.Progress.SnapTurn)
+            {
+                if (Mathf.Abs(x) > 0.15f) transform.RotateAround(head.transform.position, Vector3.up, x * TurnSmoothDeg * Time.deltaTime);
+                return;
+            }
             if (Mathf.Abs(x) < 0.3f) { _snapLatch = false; return; }
             if (_snapLatch || Mathf.Abs(x) < 0.6f) return;
             _snapLatch = true;

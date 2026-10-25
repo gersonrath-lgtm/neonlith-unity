@@ -81,7 +81,7 @@ namespace Neonlith.Game
             s._towerRoot = new GameObject("Tuerme").transform;
             s._fxRoot = new GameObject("Effekte").transform;
             s._music = go.AddComponent<AudioSource>();
-            s._music.loop = true; s._music.volume = 0.5f;
+            s._music.loop = true; s._music.volume = 0.5f * Progress.MusicVolume;
             s._sfx = go.AddComponent<AudioSource>();
             s._sfx.spatialBlend = 0f;
             s.PlayMusic("theme_game");
@@ -259,6 +259,7 @@ namespace Neonlith.Game
             }
             e.hp -= toHp;
             if (direct) e.HitFlash();
+            View.DamageNumbers.Show(e.Center, dmg, source, dmg >= e.maxHp * 0.5f && e.maxHp > 60f);
             if (e.hp <= 0f) Kill(e);
             return dmg;
         }
@@ -898,6 +899,7 @@ namespace Neonlith.Game
         }
 
         public void Say(string text, float seconds) { message = text; messageUntil = Time.time + seconds; }
+        public void ApplyVolumes() { if (_music != null) _music.volume = 0.5f * Progress.MusicVolume; }
         public string MessageNow => Time.time < messageUntil ? message : "";
 
         /// <summary>Klang aus Resources/Audio/SFX; gleicher Klang höchstens alle 40 ms (Stimmenbegrenzung wie Audio.gd).</summary>
@@ -907,6 +909,7 @@ namespace Neonlith.Game
             _sfxLast[name] = Time.time;
             var clip = Resources.Load<AudioClip>("Audio/SFX/" + name);
             if (clip == null) return;
+            volume *= Progress.SfxVolume;
             if (at.HasValue) AudioSource.PlayClipAtPoint(clip, at.Value, volume);
             else _sfx.PlayOneShot(clip, volume);
         }
