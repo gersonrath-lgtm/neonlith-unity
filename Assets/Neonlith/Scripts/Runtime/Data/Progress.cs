@@ -57,7 +57,7 @@ namespace Neonlith.Data
             return k <= 0.10f ? 3 : (k <= 0.40f ? 2 : 1);
         }
 
-        public static void RecordMission(int n, bool won, int livesLost, int startLives)
+        public static void RecordMission(int n, bool won, int livesLost, int startLives, float shardFactor = 1f)
         {
             var m = Data["missions"] as JObject ?? (JObject)(Data["missions"] = new JObject());
             var rec = m[n.ToString()] as JObject ?? new JObject { ["won"] = false, ["stars"] = 0, ["tries"] = 0 };
@@ -67,7 +67,7 @@ namespace Neonlith.Data
                 var first = !(bool)rec["won"];
                 rec["won"] = true;
                 rec["stars"] = Math.Max((int)rec["stars"], Stars(livesLost, startLives));
-                Data["shards"] = (int)Data["shards"] + (first ? 30 : 10);
+                Data["shards"] = (int)Data["shards"] + Mathf.RoundToInt((first ? 30 : 10) * shardFactor);
             }
             m[n.ToString()] = rec;
             Save();

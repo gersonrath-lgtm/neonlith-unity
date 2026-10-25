@@ -76,6 +76,7 @@ namespace Neonlith.Game
             var a = XRInput.Confirm;
             if (a && !_aLatch && _menu == null) _buildMode = !_buildMode;
             _aLatch = a;
+            if (session.tutorial != null && session.tutorial.visible && session.tutorial.wantBuildMode) _buildMode = true;
             var bBtn = XRInput.Back;
             if (bBtn && !_bLatch) CloseMenu();
             _bLatch = bBtn;
@@ -126,6 +127,7 @@ namespace Neonlith.Game
         {
             CloseMenu();
             _menuPad = pad;
+            session.Fire("placing:" + (pad.trap ? "trap" : "pad"));
             var kinds = new List<string>(pad.trap ? mission.traps : mission.towers);
             if (!pad.trap && !kinds.Contains("teahouse")) kinds.Add("teahouse");
             if (pad.trap && kinds.Count == 0) kinds.AddRange(Balance.TrapOrder);
@@ -135,7 +137,7 @@ namespace Neonlith.Game
             {
                 var st = Balance.Structure(k);
                 if (st == null) continue;
-                var cost = Balance.BuildCost(k);
+                var cost = session.BuildCost(k);
                 var kind = k;
                 rows.Add(($"{st.name}   {cost}", () => { if (session.Build(kind, pad) != null) CloseMenu(); }, session.gold >= cost));
             }
@@ -146,7 +148,8 @@ namespace Neonlith.Game
         {
             CloseMenu();
             _menuTower = t;
-            var up = Balance.UpgradeCost(t.Kind, t.level);
+            session.Fire("selected");
+            var up = session.UpgradeCost(t.Kind, t.level);
             var rows = new List<(string, System.Action, bool)>();
             var txt = t.level + 1 < t.type.upgradeTexts.Count ? t.type.upgradeTexts[t.level + 1] : "";
             rows.Add((up >= 0 ? $"Ausbauen   {up}" : "Höchste Stufe", () => { if (session.Upgrade(t)) OpenTowerMenu(t); }, up >= 0 && session.gold >= up));

@@ -37,8 +37,13 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
 - **Gegner**: alle Arten mit Fähigkeiten (Hetzer-Sprint, Schilder-Abschirmung, Nebelweberin-Heilung, Spieher legt
   Türme lahm, Packträger platzt, Flieger), Eliten (Schildträger, Phantom, Unbeugsam, Signalschatten), Bosse
   (Rufe, Wut, Regeneration, Immunitäten), Lebensfaktor je Welle nach `run.gd`.
-- **Ablauf**: Funk, Countdown, Wellen, Leben am Kern, Sieg und Niederlage, Pausenmenü (Weiter, neu starten,
-  Missionen mit Freischaltung und Sternen, Waffe, Waffenhand), Spielstand in `progress.json`.
+- **Ablauf**: Funk des Protokolls (Wellenansagen mit Zusammensetzung, Zwischenfunk, Durchbruch, Anomalie), Countdown,
+  Wellen, Leben am Kern, Sieg und Niederlage, Pausenmenü (Weiter, neu starten, Missionen mit Freischaltung und
+  Sternen, Waffe, Waffenhand), Spielstand in `progress.json`.
+- **Segenskarten**: nach jeder dritten Welle drei Karten im Halbkreis vor der Brust (gewöhnlich, selten, episch),
+  Wahl per Strahl; alle 25 Karten mit ihren Wirkungen auf die Türme.
+- **Gizmo und Tutorial**: die Begleitdrohne schwebt links vorn, reagiert auf Wellen, Treffer, Bosse, Sieg und
+  Niederlage; in Mission 1 führt sie einmal durch Bauen, Wellenstart, Gewehr und Turm-Tafel.
 
 | Eingabe | Wirkung |
 |---|---|
@@ -54,8 +59,7 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
 | X | nächste Welle sofort (Bonus-Essenz) |
 | Menü-Taste (links) | Pause und Menü |
 
-Noch nicht dabei (Reihenfolge in `Docs/UNITY_PORT.md`): Segenskarten, Buddy-Drohne Gizmo und Tutorial, Rook und
-Hände, Hub und Halle der Tore, Fertigkeitsbäume mit Kernsplittern, Zonen und Wandläufe der Gegner, Nachschub und
+Noch nicht dabei (Reihenfolge in `Docs/UNITY_PORT.md`): Rook und Hände, Hub und Halle der Tore, Fertigkeitsbäume mit Kernsplittern, Zonen und Wandläufe der Gegner, Nachschub und
 Raider, Wetter, die eigenen Shader (Fernberuhigung, Holo), Ladebild als OpenXR-Ebene, die reichen Modelle der
 Türme, Gegner und Waffen (vorerst Formen aus Kästen und Prismen).
 

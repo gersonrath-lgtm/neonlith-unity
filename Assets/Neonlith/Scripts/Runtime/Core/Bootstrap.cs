@@ -64,6 +64,8 @@ namespace Neonlith
             var pw = PlayerWeapon.Attach(Rig.WeaponHand, Rig.OtherHand, arm, Session, theme);
             BuildController.Create(Session, Mission, Rig.OtherHand, Rig.head.transform, theme);
             PauseMenu.Create(Session, Rig.head.transform);
+            BoonCeremony.Create(Session, Rig.head.transform);
+            BuddyDrone.Create(Rig.head.transform, Session, theme);
             Hud.Create(Session, pw, Rig.head.transform);
 
             Debug.Log($"Neonlith: Mission {mission} „{Mission.name}“, Welt {theme.name}, {Mission.waves.Count} Wellen, {Mission.paths.Count} Wege, {Mission.pads.Count} Bauplätze, Deck bei {Mission.deckTop}");

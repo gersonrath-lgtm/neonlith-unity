@@ -30,7 +30,15 @@ namespace Neonlith.Game
         public readonly List<Projectile> projectiles = new List<Projectile>();
         public Enemy boss;
         public float DeltaTime { get; private set; }
-        public System.Action<string> OnTutorial;
+        /// <summary>Spielereignisse (Tutorial, Drohne, Funk): wave_started, wave_cleared, lives_lost, boss, boss_defeated,
+        /// victory, defeat, first_seen:<art>, shot, ship_hit, essence, built:<art>, upgraded, placing:, selected, boon:<id>.</summary>
+        public event System.Action<string> OnEvent;
+        public event System.Action<List<string>> OnBoonOffer;
+        public bool offerOpen;                  // Segenskarten offen: Bauzeit steht
+        public Tutorial tutorial;
+        readonly HashSet<string> _seenTypes = new HashSet<string>();
+        float _idleT = 18f, _midT;
+        bool _leaked, _critical;
 
         struct Spawn { public float time; public string type; public int path; public string elite; }
         readonly List<Spawn> _queue = new List<Spawn>();
@@ -57,8 +65,15 @@ namespace Neonlith.Game
             s._sfx = go.AddComponent<AudioSource>();
             s._sfx.spatialBlend = 0f;
             s.PlayMusic("theme_game");
-            s.Say(m.commsStart.Length > 0 ? m.commsStart : $"Mission {m.number}: {m.name}", 6f);
+            s.Say(m.commsStart.Length > 0 ? Comms.Speaker + ": " + m.commsStart : $"Mission {m.number}: {m.name}", 7f);
             s.countdown = 10f;
+            Boons.Reset();
+            if (m.number == 1 && !Tutorial.Done)
+            {
+                s.tutorial = new Tutorial(WorldTheme.Current.name);
+                s.tutorial.Start();
+                s.countdown = 60f;             // die Einführung führt zum Wellenstart (X)
+            }
             return s;
         }
 
@@ -68,12 +83,15 @@ namespace Neonlith.Game
             DeltaTime = paused ? 0f : Time.deltaTime;
             if (paused) return;
             playTime += DeltaTime;
+            tutorial?.Update(DeltaTime);
             switch (phase)
             {
                 case Phase.Intro:
                 case Phase.Build:
-                    countdown -= DeltaTime;
+                    if (!offerOpen) countdown -= DeltaTime;
                     if (countdown <= 0f) StartWave(false);
+                    _idleT -= DeltaTime;
+                    if (_idleT <= 0f) { _idleT = Random.Range(22f, 32f); Radio(Comms.Line("idle"), 4f); }
                     break;
                 case Phase.Wave:
                     StepWave();
@@ -92,7 +110,7 @@ namespace Neonlith.Game
         void Buttons()
         {
             var x = XRInput.StartWave;
-            if (x && !_xLatch && (phase == Phase.Build || phase == Phase.Intro)) StartWave(true);
+            if (x && !_xLatch && (phase == Phase.Build || phase == Phase.Intro) && !offerOpen) StartWave(true);
             _xLatch = x;
 
         }
@@ -126,15 +144,18 @@ namespace Neonlith.Game
             _queue.Sort((p, q) => p.time.CompareTo(q.time));
             phase = Phase.Wave;
             countdown = -1f;
-            Say($"Welle {wave + 1}/{mission.waves.Count}: {w.title}", 3f);
+            _midT = 0f;
+            var radio = Comms.StartText(mission, wave);
+            Say($"Welle {wave + 1}/{mission.waves.Count}: {w.title}" + (radio.Length > 0 ? "\n" + Comms.Speaker + ": " + radio : ""), 4f);
             Sfx("wave_start", 0.8f);
-            OnTutorial?.Invoke("wave_started");
+            Fire("wave_started");
             if (w.boss) PlayMusic("theme_boss");
         }
 
         void StepWave()
         {
             _waveTime += DeltaTime;
+            var total = _queue.Count + enemies.Count;
             while (_queue.Count > 0 && _queue[0].time <= _waveTime)
             {
                 var s = _queue[0];
@@ -142,6 +163,8 @@ namespace Neonlith.Game
                 var e = SpawnEnemy(s.type, 0f, s.path);
                 if (s.elite.Length > 0) e.MakeElite(s.elite);
             }
+            // Zwischenstand einmal je Welle, wenn alle erschienen sind und noch viele laufen
+            if (_queue.Count == 0 && enemies.Count >= 6 && _midT == 0f) { _midT = 1f; Radio(Comms.MidText(enemies.Count), 3f); }
             if (_queue.Count == 0 && enemies.Count == 0) WaveComplete();
         }
 
@@ -158,8 +181,10 @@ namespace Neonlith.Game
             {
                 boss = e;
                 Sfx("boss_roar", 0.9f);
-                Say($"{t.name} greift an!", 4f);
+                Say($"{t.name} greift an!\n{Comms.Speaker}: {Comms.Line("boss")}", 4f);
+                Fire("boss");
             }
+            if (_seenTypes.Add(t.id)) Fire("first_seen:" + t.id);
             return e;
         }
 
@@ -168,14 +193,23 @@ namespace Neonlith.Game
             var w = mission.waves[wave];
             var income = 0;
             foreach (var t in towers) { t.Repair(); if (t.Kind == "teahouse") income += (int)t.Stats.Get("income"); }
-            gold += w.reward + income;
+            var reward = Mathf.RoundToInt(w.reward * Boons.RewardFactor);
+            gold += reward + income;
+            if (Boons.Has("interest")) gold += Mathf.Min(40, Mathf.FloorToInt(gold * 0.1f));
             phaseId++;
             Sfx("wave_clear", 0.7f);
+            Fire("wave_cleared");
             if (wave + 1 >= mission.waves.Count) { Win(); return; }
             phase = Phase.Build;
             countdown = Balance.BuildTime;
-            Say($"Welle {wave + 1} geschafft: +{w.reward}{(income > 0 ? $" +{income} Generator" : "")} Essenz. Nächste in {Balance.BuildTime:0} s (X: sofort)", 4f);
+            _idleT = 12f;
+            Say($"Welle {wave + 1} geschafft: +{reward}{(income > 0 ? $" +{income} Generator" : "")} Essenz. Nächste in {Balance.BuildTime:0} s (X: sofort)\n{Comms.Speaker}: {Comms.ClearedText(mission, wave)}", 6f);
             if (w.boss) PlayMusic("theme_game");
+            if (Boons.OfferAfter(wave, mission.waves.Count))
+            {
+                var cards = Boons.Roll(mission.towers);
+                if (cards.Count > 0) OnBoonOffer?.Invoke(cards);
+            }
         }
 
         // ------------------------------------------------------------------------------------------------
@@ -227,7 +261,9 @@ namespace Neonlith.Game
             e.alive = false; e.hp = 0f;
             kills++;
             Split(e);
-            if (e.bounty > 0) { gold += e.bounty; essenceCollected += e.bounty; }
+            var gain = e.bounty + (e.bounty > 0 ? Boons.BountyAdd : 0);
+            if (gain > 0) { gold += gain; essenceCollected += gain; Fire("essence"); }
+            if (e.type.boss) Fire("boss_defeated");
             if (e.wildfireDmg > 0f && e.burnTime > 0f)
             {
                 var wd = e.wildfireDmg; e.wildfireDmg = 0f;
@@ -264,6 +300,9 @@ namespace Neonlith.Game
             lives = Mathf.Max(0, lives - e.damage);
             Sfx("life_lost", 0.8f);
             XRInput.Haptic(0.4f, 0.12f);
+            Fire("lives_lost");
+            if (!_leaked) { _leaked = true; Radio(Comms.Line("first_leak"), 3f); }
+            else if (!_critical && lives > 0 && lives < mission.lives * 0.3f) { _critical = true; Radio(Comms.Line("critical"), 3f); }
             e.Despawn();
             if (lives <= 0) Lose();
         }
@@ -458,7 +497,12 @@ namespace Neonlith.Game
                     foreach (var e in hits)
                     {
                         DamageEnemy(e, st.Get("damage"), "ice", true);
-                        if (e.alive) Combat.ApplySlow(e, st.Get("slow"), st.Get("slow_time"));
+                        if (e.alive)
+                        {
+                            Combat.ApplySlow(e, st.Get("slow"), st.Get("slow_time"));
+                            var perma = st.Get("permafrost");
+                            if (perma > 0f) { e.vulnAmount = Mathf.Max(e.vulnAmount, perma); e.vulnTime = Mathf.Max(e.vulnTime, st.Get("slow_time") + 0.2f); }
+                        }
                     }
                     Sfx("ice_hit", 0.3f, p.targetPos);
                     break;
@@ -504,7 +548,7 @@ namespace Neonlith.Game
             if (st.IsTrap != pad.trap) return st.IsTrap ? "Sperren stehen nur mitten auf der Fahrbahn" : "Hier kann nicht gebaut werden";
             if (pad.tower != null) return "Dieses Feld ist belegt";
             if (st.IsTrap) foreach (var t in towers) if (t.IsTrap && Planar(t.Position, pad.position) < 2.5f * Balance.FieldM) return "Zu nah an einer anderen Sperre";
-            if (gold < Balance.BuildCost(kind)) return "Nicht genug Essenz";
+            if (gold < BuildCost(kind)) return "Nicht genug Essenz";
             return "";
         }
 
@@ -512,27 +556,28 @@ namespace Neonlith.Game
         {
             var reason = CanBuild(kind, pad);
             if (reason.Length > 0) { Say(reason, 2f); Sfx("ui_error", 0.5f); return null; }
-            gold -= Balance.BuildCost(kind);
+            gold -= BuildCost(kind);
             var t = Tower.Create(this, Balance.Structure(kind), pad, _towerRoot);
+            t.invested = BuildCost(kind);
             t.builtThisPhase = phase == Phase.Build || phase == Phase.Intro;
             pad.tower = t;
             towers.Add(t);
             FxRing(pad.position, 0.8f, new Color(1f, 0.95f, 0.8f));
             Sfx("build", 0.6f, pad.position);
-            OnTutorial?.Invoke("built:" + kind);
+            Fire("built:" + kind);
             return t;
         }
 
         public bool Upgrade(Tower t)
         {
-            var cost = Balance.UpgradeCost(t.Kind, t.level);
+            var cost = UpgradeCost(t.Kind, t.level);
             if (cost < 0) { Say("Höchste Stufe erreicht", 2f); return false; }
             if (gold < cost) { Say("Nicht genug Essenz", 2f); Sfx("ui_error", 0.5f); return false; }
             gold -= cost;
             t.invested += cost;
             t.Upgrade();
             Sfx("upgrade", 0.6f, t.Position);
-            OnTutorial?.Invoke("upgraded");
+            Fire("upgraded");
             return true;
         }
 
@@ -554,6 +599,37 @@ namespace Neonlith.Game
             return v;
         }
 
+        public int BuildCost(string kind) => Mathf.RoundToInt(Balance.BuildCost(kind) * Boons.CostFactor);
+        public int UpgradeCost(string kind, int level) { var c = Balance.UpgradeCost(kind, level); return c < 0 ? -1 : Mathf.RoundToInt(c * Boons.CostFactor); }
+
+        /// <summary>Segenskarte gewählt: Sofortwirkungen hier, Turmwerte über Boons.ApplyMods (Game.take_boon).</summary>
+        public void TakeBoon(string id)
+        {
+            Boons.Take(id);
+            switch (id)
+            {
+                case "lives": lives += 3; break;
+                case "repair": lives += 5; break;
+                case "treasure": gold += 150 + 50 * (wave / Boons.Every); break;
+            }
+            var c = Boons.Cards[id];
+            Say($"Segen: {c.name}. {c.text}", 4f);
+            Fire("boon:" + id);
+        }
+
+        public void Fire(string ev)
+        {
+            tutorial?.OnEvent(ev);
+            OnEvent?.Invoke(ev);
+        }
+
+        /// <summary>Funkmeldung des Protokolls (Comms).</summary>
+        public void Radio(string text, float seconds)
+        {
+            if (string.IsNullOrEmpty(text)) return;
+            Say(Comms.Speaker + ": " + text, seconds);
+        }
+
         // ------------------------------------------------------------------------------------------------
         void Win()
         {
@@ -561,7 +637,8 @@ namespace Neonlith.Game
             Say((mission.commsEnd.Length > 0 ? mission.commsEnd + "\n" : "") + "Mission geschafft.", 999f);
             Sfx("victory", 0.9f);
             PlayMusic("theme_menu");
-            Progress.RecordMission(mission.number, true, mission.lives - lives, mission.lives);
+            Fire("victory");
+            Progress.RecordMission(mission.number, true, mission.lives - lives, mission.lives, Boons.ShardFactor);
         }
 
         void Lose()
@@ -569,10 +646,11 @@ namespace Neonlith.Game
             phase = Phase.Defeat;
             foreach (var e in enemies.ToArray()) e.Despawn();
             enemies.Clear(); _guards.Clear();
-            Say("Der Kern ist gefallen.", 999f);
+            Say("Der Kern ist gefallen.\n" + Comms.Speaker + ": " + Comms.Line("defeat"), 999f);
             Sfx("defeat", 0.9f);
             PlayMusic("theme_menu");
-            Progress.RecordMission(mission.number, false, mission.lives - lives, mission.lives);
+            Fire("defeat");
+            Progress.RecordMission(mission.number, false, mission.lives - lives, mission.lives, 1f);
         }
 
         public void Say(string text, float seconds) { message = text; messageUntil = Time.time + seconds; }

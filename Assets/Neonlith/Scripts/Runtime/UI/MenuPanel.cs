@@ -32,7 +32,9 @@ namespace Neonlith.UI
             m.root = new GameObject("Tafel");
             m.root.transform.position = at;
             var rowCount = Mathf.CeilToInt(rows.Count / (float)columns);
-            var h = 0.16f * rowCount + 0.3f + (title.Contains("\n") ? 0.08f : 0f);
+            var titleLines = title.Split('\n').Length;
+            var titleExtra = 0.07f * (titleLines - 1);
+            var h = 0.16f * rowCount + 0.3f + titleExtra;
             var w = width;
             var k = new MeshKit();
             k.Box(new Vector3(0f, h * 0.5f, 0.01f), new Vector3(w, h, 0.01f));
@@ -40,13 +42,13 @@ namespace Neonlith.UI
             var frame = new MeshKit();
             frame.Box(new Vector3(0f, h * 0.5f, 0.015f), new Vector3(w + 0.02f, h + 0.02f, 0.005f));
             frame.Spawn("Rand", NeonMaterials.Neon("edge", Edge), m.root.transform, false);
-            Text(m.root.transform, title, new Vector3(0f, h - 0.1f - (title.Contains("\n") ? 0.04f : 0f), -0.005f), 0.05f, Color.white);
+            Text(m.root.transform, title, new Vector3(0f, h - 0.1f - titleExtra * 0.5f, -0.005f), 0.05f, Color.white);
             var colW = (w - 0.12f) / columns;
             for (var i = 0; i < rows.Count; i++)
             {
                 var (label, action, enabled) = rows[i];
                 var r = i / columns; var c = i % columns;
-                var y = h - 0.26f - (title.Contains("\n") ? 0.08f : 0f) - 0.16f * r;
+                var y = h - 0.26f - titleExtra - 0.16f * r;
                 var x = -w * 0.5f + 0.06f + colW * (c + 0.5f);
                 var bg = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 bg.name = "Knopf";
@@ -62,6 +64,24 @@ namespace Neonlith.UI
             m.SetHover(null);
             All.Add(m);
             return m;
+        }
+
+        /// <summary>Zeilenumbruch für TextMesh (kein eigener Umbruch): nach etwa so vielen Zeichen am Wortende.</summary>
+        public static string Wrap(string text, int width)
+        {
+            if (string.IsNullOrEmpty(text)) return "";
+            var outLines = new List<string>();
+            foreach (var para in text.Split('\n'))
+            {
+                var line = "";
+                foreach (var word in para.Split(' '))
+                {
+                    if (line.Length > 0 && line.Length + 1 + word.Length > width) { outLines.Add(line); line = word; }
+                    else line = line.Length == 0 ? word : line + " " + word;
+                }
+                outLines.Add(line);
+            }
+            return string.Join("\n", outLines);
         }
 
         public static TextMesh Text(Transform parent, string s, Vector3 local, float size, Color col)

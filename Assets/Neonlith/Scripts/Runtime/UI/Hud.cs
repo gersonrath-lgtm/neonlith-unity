@@ -61,7 +61,8 @@ namespace Neonlith.UI
             var ammoTxt = w == null ? "" : (w.reloading ? $"  Nachladen {Mathf.Clamp01(w.reloadT / w.arm.reload) * 100f:0}%" : $"  {w.arm.name} {w.ammo}/{w.arm.mag}");
             var bossTxt = s.boss != null && s.boss.alive ? $"   {s.boss.type.name} {Mathf.CeilToInt(100f * s.boss.hp / s.boss.maxHp)}%" : "";
             _text.text = $"{waveTxt}   Kern {s.lives}   Essenz {s.gold}{ammoTxt}{bossTxt}";
-            _msg.text = s.MessageNow;
+            var tut = s.tutorial != null && s.tutorial.visible ? "Gizmo: " + s.tutorial.text + (s.tutorial.label.Length > 0 ? $"  [{s.tutorial.label}]" : "") : "";
+            _msg.text = MenuPanel.Wrap(tut.Length > 0 ? tut + (s.MessageNow.Length > 0 ? "\n" + s.MessageNow : "") : s.MessageNow, 70);
         }
     }
 }

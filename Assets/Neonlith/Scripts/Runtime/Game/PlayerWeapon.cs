@@ -211,9 +211,10 @@ namespace Neonlith.Game
             {
                 end = hit.point;
                 var e = hit.collider.GetComponentInParent<Enemy>();
-                if (e != null && session != null) session.DamageEnemy(e, arm.damage, "kanzel", true);
+                if (e != null && session != null) { session.DamageEnemy(e, arm.damage, "kanzel", true); session.Fire("ship_hit"); }
                 _impact.position = hit.point + hit.normal * 0.02f; _impact.gameObject.SetActive(true); _impactT = 0.15f;
             }
+            session?.Fire("shot");
             Tracer(origin, end, arm.id == "sniper" ? 0.02f : 0.012f, 0.06f);
             if (_shot != null) _audio.PlayOneShot(_shot, 0.8f);
             XRInput.Haptic(arm.id == "sniper" ? 1f : arm.id == "rifle" ? 0.5f : 0.7f, arm.id == "sniper" ? 0.12f : 0.05f);
