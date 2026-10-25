@@ -1,0 +1,105 @@
+# Cloud-Build der Quest-APK mit GameCI (https://game.ci): läuft bei jedem Push auf main und von Hand
+# (Actions → „Quest-APK“ → Run workflow). Braucht drei Secrets im Repository (Settings → Secrets and variables →
+# Actions): UNITY_LICENSE (Inhalt der Datei Unity_lic.ulf), UNITY_EMAIL, UNITY_PASSWORD. Fehlen sie, endet der
+# Lauf mit einem Hinweis statt mit einem Fehler. Ergebnis: Artefakt „Neonlith-Quest-APK“ und Release „quest-latest“.
+name: Quest-APK
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "Docs/**"
+      - "Tools/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quest-apk
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Android-APK (Unity 6000.0, IL2CPP, ARM64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Secrets prüfen
+        id: secrets
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        run: |
+          if [ -z "$UNITY_LICENSE" ] || [ -z "$UNITY_EMAIL" ] || [ -z "$UNITY_PASSWORD" ]; then
+            echo "::warning::Secrets UNITY_LICENSE, UNITY_EMAIL und UNITY_PASSWORD fehlen; kein Build (siehe README, Abschnitt Cloud-Build)."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Platz schaffen (Android-Image und IL2CPP brauchen viel Platte)
+        if: steps.secrets.outputs.ok == 'true'
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
+      - name: Quelltext holen
+        if: steps.secrets.outputs.ok == 'true'
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Library-Cache
+        if: steps.secrets.outputs.ok == 'true'
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Android-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: |
+            Library-Android-
+
+      - name: Unity-Build
+        if: steps.secrets.outputs.ok == 'true'
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: auto
+          targetPlatform: Android
+          buildMethod: Neonlith.Editor.CiBuild.Build
+          buildName: Neonlith
+          androidExportType: androidPackage
+          androidTargetSdkVersion: AndroidApiLevel32
+          versioning: Custom
+          version: 4.99.65
+          androidVersionCode: 5055
+          allowDirtyBuild: true
+
+      - name: APK als Artefakt
+        if: steps.secrets.outputs.ok == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Neonlith-Quest-APK
+          path: build/Android/**/*.apk
+          if-no-files-found: error
+
+      - name: Release „quest-latest“ aktualisieren
+        if: steps.secrets.outputs.ok == 'true' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: quest-latest
+          name: Quest-APK (neuester Stand von main)
+          prerelease: true
+          files: build/Android/**/*.apk
+          body: |
+            Automatischer Build von `${{ github.sha }}`. Installieren: `adb install -r Neonlith.apk` oder per SideQuest.

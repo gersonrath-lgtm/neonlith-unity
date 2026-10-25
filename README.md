@@ -78,6 +78,37 @@ Die Pakete:
    | uGUI (mit TextMeshPro) | Tafeln, Schrift mit Abstandsfeld (ab Etappe 5) | `Control` in SubViewports, `Label3D` MSDF |
    | Test Framework | Tests | `scripts/tests/*_runner.gd` |
 
+## Cloud-Build ohne Unity auf dem Mac
+
+Der Workflow `.github/workflows/quest-apk.yml` baut die APK bei jedem Push auf `main` auf GitHub (GameCI,
+Unity 6000.0.58f1, IL2CPP, ARM64). Einmalig einzurichten:
+
+1. **Unity-Konto und Lizenzdatei.** Unity Hub installieren (nur der Hub, kein Editor), anmelden, dann
+   *Preferences → Licenses → Add → „Get a free personal license“*. Das schreibt die Datei
+   `/Library/Application Support/Unity/Unity_lic.ulf` (im Finder: Gehe zu → Ordner, Pfad eingeben; der Ordner
+   `Library` liegt auf der obersten Ebene der Platte, nicht im Benutzerordner). Erscheint die Lizenz im Hub, aber
+   die Datei fehlt, den Schritt wiederholen.
+2. **Drei Secrets** im Repository `neonlith-unity` unter *Settings → Secrets and variables → Actions → New
+   repository secret*:
+   - `UNITY_LICENSE`: der komplette Inhalt der Datei `Unity_lic.ulf` (mit TextEdit öffnen, alles kopieren),
+   - `UNITY_EMAIL`: die E-Mail des Unity-Kontos,
+   - `UNITY_PASSWORD`: das Passwort des Unity-Kontos.
+3. Unter *Actions* den Workflow **Quest-APK** einmal von Hand starten („Run workflow“) oder einfach pushen.
+   Der erste Lauf dauert 30 bis 60 Minuten (Docker-Image, IL2CPP), spätere mit Cache kürzer. Ohne Secrets endet der
+   Lauf mit einem Hinweis, nicht mit einem Fehler.
+4. **Ergebnis**: unter *Releases* das Vorab-Release **quest-latest** mit `Neonlith.apk`, außerdem als Artefakt am
+   Workflow-Lauf. Die Lizenz bleibt an deinem Konto; Personal reicht für den Build.
+
+**Auf die Quest bringen** (ohne Unity): entweder die App **SideQuest** auf dem Mac (APK hineinziehen) oder die
+Android-„Platform-Tools“ von Google (klein, nur `adb`):
+
+```
+~/platform-tools/adb install -r ~/Downloads/Neonlith.apk
+```
+
+Die Quest muss im Entwicklermodus sein und die Verbindung zum Mac einmal in der Brille erlaubt werden. Die App
+erscheint dann unter „Unbekannte Quellen“. Logmeldungen für die Fehlersuche: `adb logcat -s Unity`.
+
 ## Ordner
 
 ```
@@ -92,7 +123,7 @@ neonlith-unity/
     Scripts/Runtime    Neonlith.Runtime: Core (Bootstrap, WorldTheme, ShaderGlobals), Data (Balance, MissionData,
                        GameData), XR (XRInput, XRRig), Game (GameSession, Enemy, PlayerWeapon), View (MeshKit,
                        BridgeBuilder, SkyBuilder, NeonMaterials), UI (Hud)
-    Scripts/Editor     Neonlith.Editor (Projekteinrichtung, Szene, APK-Build)
+    Scripts/Editor     Neonlith.Editor (Projekteinrichtung, Szene, APK-Build, CI-Einstieg CiBuild)
     Settings/          URP-Asset und Renderer (vom Menü angelegt)
     Scenes/            Bootstrap.unity (vom Menü angelegt)
     Shaders/           leer: hier entstehen die URP-Shader (Tabelle in Docs/UNITY_PORT.md)
