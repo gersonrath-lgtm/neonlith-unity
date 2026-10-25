@@ -2,7 +2,13 @@
     "name": "Neonlith.Editor",
     "rootNamespace": "Neonlith.Editor",
     "references": [
-        "Neonlith.Runtime"
+        "Neonlith.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.XR.Management",
+        "Unity.XR.Management.Editor",
+        "Unity.XR.OpenXR",
+        "Unity.XR.OpenXR.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -13,6 +19,10 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        { "name": "com.unity.xr.openxr", "expression": "1.0", "define": "NEONLITH_OPENXR" },
+        { "name": "com.unity.xr.management", "expression": "4.0", "define": "NEONLITH_XRM" },
+        { "name": "com.unity.render-pipelines.universal", "expression": "12.0", "define": "NEONLITH_URP" }
+    ],
     "noEngineReferences": false
 }

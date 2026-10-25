@@ -1,48 +1,64 @@
 using Neonlith.Data;
+using Neonlith.Game;
+using Neonlith.UI;
+using Neonlith.View;
+using Neonlith.XR;
 using UnityEngine;
 
 namespace Neonlith
 {
     /// <summary>
-    /// Einstieg des Unity-Ports: Gegenstück zu <c>scenes/main_xr.tscn</c> + <c>XRMain._ready</c> in Godot,
-    /// hier vorerst nur Palette, Weltfarben und ein Datencheck. Auf ein leeres GameObject in der Szene
-    /// <c>Bootstrap</c> legen. Die Autoloads aus Godot (CrashLog, Balance, Assets, Settings, SaveGame, Meta,
-    /// Audio) werden beim Port als eigene Komponenten unter diesem Objekt angelegt (Docs/UNITY_PORT.md, Etappe 1).
+    /// Einstieg des Unity-Ports: Gegenstück zu <c>scenes/main_xr.tscn</c> + <c>XRMain</c> in Godot, auf den ersten
+    /// spielbaren Stand reduziert. Baut aus einer leeren Szene alles im Code auf: Palette und Weltfarben, Himmel und
+    /// Licht, Brücke der Mission, Spieler in der Brille auf dem Standdeck, Waffe in der Hand, Wellen und HUD.
+    /// Auf ein leeres GameObject in der Szene <c>Bootstrap</c> legen (Menü „Neonlith → Szene erzeugen“).
     /// </summary>
     [DefaultExecutionOrder(-1000)]
     public sealed class Bootstrap : MonoBehaviour
     {
-        [Tooltip("Welt 0..3 beim Start (Standard 1 = Kernstation, wie in Godot WorldTheme.index)")]
-        [Range(0, 3)] public int world = 1;
+        [Tooltip("Mission 1..20 (campaign.json); bestimmt Karte, Wellen und Weltfarbe")]
+        [Range(1, 20)] public int mission = 1;
 
-        [Tooltip("Mission 1..20, mit der die Weltfarbe bestimmt wird (0 = Feld 'world' benutzen)")]
-        [Range(0, 20)] public int mission = 0;
+        [Tooltip("Waffe: pistol, rifle, sniper (Arsenal)")]
+        public string weapon = "pistol";
 
-        static Bootstrap _instance;
+        [Tooltip("Linkshänder: Waffe links, Gehen mit dem rechten Stick")]
+        public bool leftHanded = false;
+
+        public static Bootstrap Instance { get; private set; }
+        public MissionData Mission { get; private set; }
+        public GameSession Session { get; private set; }
+        public XRRig Rig { get; private set; }
 
         void Awake()
         {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-
+            Instance = this;
+            Application.targetFrameRate = -1;
+            NeonMaterials.Clear();
+            GameData.ClearCache();
             ShaderGlobals.ApplyDefaults();
-            WorldTheme.Index = mission > 0 ? WorldTheme.WorldOfMission(mission) : world;
-            ShaderGlobals.ApplyWorld(WorldTheme.Current);
 
-            var count = GameData.MissionCount;
-            Debug.Log($"Neonlith: Welt {WorldTheme.Current.name} ({WorldTheme.Current.id}), {count} Missionen in campaign.json");
-        }
+            Mission = MissionData.Load(mission);
+            if (Mission == null) return;
+            WorldTheme.Index = WorldTheme.WorldOfMission(mission);
+            var theme = WorldTheme.Current;
+            ShaderGlobals.ApplyWorld(theme);
+            XRInput.Init();
+            XRInput.LeftHanded = leftHanded;
 
-        /// <summary>Welt wechseln (Hub, Missionsstart). Setzt Palette und Nebel neu.</summary>
-        public static void SetWorld(int index)
-        {
-            WorldTheme.Index = index;
-            ShaderGlobals.ApplyWorld(WorldTheme.Current);
+            var world = new GameObject("Welt").transform;
+            SkyBuilder.Apply(theme, world);
+            BridgeBuilder.Build(Mission, theme).transform.SetParent(world, false);
+
+            Session = GameSession.Create(Mission);
+            var lookAt = Mission.paths.Count > 0 ? Mission.paths[0][0] : Mission.core + Vector3.forward * 20f;
+            Rig = XRRig.Create(Mission.deckTop, Mission.StandRadiusM, lookAt);
+            SkyBuilder.SetupCamera(Rig.head, theme);
+            var arm = Balance.Arms.TryGetValue(weapon, out var a) ? a : Balance.Arms["pistol"];
+            var pw = PlayerWeapon.Attach(Rig.WeaponHand, arm, Session, theme);
+            Hud.Create(Session, pw, Rig.head.transform);
+
+            Debug.Log($"Neonlith: Mission {mission} „{Mission.name}“, Welt {theme.name}, {Mission.waves.Count} Wellen, {Mission.paths.Count} Wege, Deck bei {Mission.deckTop}");
         }
     }
 }

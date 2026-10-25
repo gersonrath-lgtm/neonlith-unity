@@ -30,6 +30,40 @@ namespace Neonlith.Tests
         }
 
         [Test]
+        public void MissionOneHasPathsWavesAndDeck()
+        {
+            var m = MissionData.Load(1);
+            Assert.IsNotNull(m);
+            Assert.AreEqual(1, m.paths.Count, "Mission 1: ein Zugang");
+            Assert.Greater(m.waves.Count, 0);
+            Assert.AreEqual(20, m.lives);
+            Assert.Greater(m.deckTop.y, m.core.y, "Standdeck liegt über der Kernplatte");
+            Assert.Greater(m.StandRadiusM, 3f);
+            var last = m.paths[0][m.paths[0].Length - 1];
+            Assert.Less(UnityEngine.Vector3.Distance(last, m.core), 8f, "Weg endet an der Kernplatte");
+        }
+
+        [Test]
+        public void EveryMissionBuildsData()
+        {
+            for (var n = 1; n <= 20; n++)
+            {
+                var m = MissionData.Load(n);
+                Assert.IsNotNull(m, $"Mission {n}");
+                Assert.Greater(m.paths.Count, 0, $"Mission {n}: Wege");
+                Assert.AreEqual(m.waves.Count, m.hpWave.Length, $"Mission {n}: Lebensfaktoren");
+            }
+        }
+
+        [Test]
+        public void ArmorRuleKeepsQuarter()
+        {
+            var block = Balance.Enemy("block");               // Rüstung 6
+            Assert.AreEqual(28f, Balance.DirectDamage(block, 34f), 0.001f);
+            Assert.AreEqual(1f, Balance.DirectDamage(block, 4f), 0.001f, "mindestens 25 %");
+        }
+
+        [Test]
         public void ConfigsConverted()
         {
             Assert.IsNotNull(GameData.Config("weapon"));
