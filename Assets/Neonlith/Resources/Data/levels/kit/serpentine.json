@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "grid_size": 38,
+  "fog_bridge": true,
+  "name": "Vertical Serpentine Bridge",
+  "note": "4.59 Brückenbaukasten: Testkarte mit drei Ebenen (docs/BRUECKEN_BAUKASTEN.md). Wegpunkte [x, z, Höhe in Feldern]. Nicht im Feldzug, nur über Run.map_override (Aufnahmen, Prüfungen). Läufe: 0 untere Ebene, 1 erste Rampe, 2 Kehre, 3 mittlere Ebene, 4 zweite Rampe zur Festung (Kern) oben.",
+  "bridge": {
+    "set": "res://data/levels/strips/moon_bridge.json",
+    "size": 38,
+    "paths": [[[12, 0, 0], [12, 14, 0], [12, 32, 2.5], [24, 32, 2.5], [24, 22, 2.5], [24, 3, 5]]],
+    "bastion": [24, 3],
+    "stand": [2, 17],
+    "look": [18, 17],
+    "kit": {
+      "seed": 11,
+      "runs": {
+        "0": {"path": ["grate", "tech", "accent", "repair"]},
+        "1": {"path": ["grate", "standard", "standard"], "edge": ["open", "clean", "tech", "grated"], "support": ["reinforced", "frame"]},
+        "2": {"edge": ["clean"]},
+        "3": {"pad": ["holo", "industrial"]},
+        "4": {"edge": ["energy", "clean", "open", "clean"], "support": ["energy", "reinforced"]}
+      }
+    },
+    "lifts": [[18, 4]]
+  }
+}

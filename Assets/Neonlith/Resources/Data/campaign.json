@@ -1,0 +1,6415 @@
+{
+ "version": 1,
+ "note": "4.59 Silence Protocol SP5, erzeugt von tools/art/levels/generate_missions.py",
+ "chapters": [
+  {
+   "id": "I",
+   "name": "LICHTFELD",
+   "title": "Lichtfeld",
+   "text": "Helles, offenes Feld am Rand der Anlage. Lerne Wand, Wandlauf, Zonen und den Ladeschuss im klaren Licht.",
+   "d": [
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5
+   ],
+   "hl": 5.5,
+   "hh": 9.0,
+   "weather": [
+    "holo",
+    "holo",
+    "holo_wind",
+    "holo_niesel",
+    "holo",
+    "holo_nebel",
+    "holo_regen",
+    "holo_sturm",
+    "holo_wind",
+    "holo_gewitter"
+   ],
+   "boss": [
+    "vey",
+    "Anomalie: Schwebeträgerin",
+    0.12
+   ]
+  },
+  {
+   "id": "II",
+   "name": "KERNSTATION",
+   "title": "Kernstation",
+   "text": "Anthrazit und Cyan, die Kernstation selbst. Höhere Decks, Läufe über dem Kopf, Eliten.",
+   "d": [
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    2.5,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "hl": 6.0,
+   "hh": 10.0,
+   "weather": [
+    "holo",
+    "holo_wind",
+    "holo",
+    "holo_niesel",
+    "holo_nebel",
+    "holo",
+    "holo_regen",
+    "holo_wind",
+    "holo_gewitter",
+    "holo_sturm"
+   ],
+   "boss": [
+    "kael",
+    "Anomalie: Kältekern",
+    0.25
+   ]
+  },
+  {
+   "id": "III",
+   "name": "TIEFE",
+   "title": "Tiefe",
+   "text": "Dunkler, tiefer, mehr Spannung. Nur Neon und Silhouette; Gabelungen, Tempozonen, alles zugleich.",
+   "d": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "hl": 8.0,
+   "hh": 12.0,
+   "weather": [
+    "holo",
+    "holo_nebel",
+    "holo_wind",
+    "holo_regen",
+    "holo",
+    "holo_niesel",
+    "holo_gewitter",
+    "holo_sturm",
+    "holo_nebel",
+    "holo_gewitter"
+   ],
+   "boss": [
+    "orun",
+    "Anomalie: Panzerwächter",
+    0.75
+   ]
+  },
+  {
+   "id": "IV",
+   "name": "ENDKERN",
+   "title": "Endkern",
+   "text": "Der Reaktorkern. Rot markiert Gefahr: Eliten, Anomalien, Wellen aus allen Richtungen. Maximale Klarheit trotz Dramatik.",
+   "d": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "hl": 8.0,
+   "hh": 12.0,
+   "weather": [
+    "holo_nebel",
+    "holo_wind",
+    "holo_regen",
+    "holo_gewitter",
+    "holo_sturm",
+    "holo_nebel",
+    "holo_gewitter",
+    "holo_sturm",
+    "holo_gewitter",
+    "holo_sturm"
+   ],
+   "boss": [
+    "brood",
+    "Anomalie: Brutkern",
+    0.6
+   ]
+  }
+ ],
+ "missions": [
+  {
+   "n": 1,
+   "label": "1",
+   "chapter": 0,
+   "name": "Lichtsteg",
+   "function": "Ein Zugang",
+   "text": "Ein Zugang. Erste Wand, Standplatz über dem Kern. Standplatz über dem Kern, die Gegner kommen von 1 Seite.",
+   "special": "Erste Wand, Standplatz über dem Kern",
+   "focus": "Zielen nach unten, Ladeschuss",
+   "weather": "holo",
+   "map": "res://data/levels/missions/mission_01.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice"
+   ],
+   "traps": [],
+   "features": [],
+   "new_towers": [
+    "arrow",
+    "ice"
+   ],
+   "new_enemies": [
+    "mist_walker"
+   ],
+   "gold": 230,
+   "lives": 20,
+   "lanes": 1.0,
+   "comms": {
+    "start": "Lichtfeld, Abschnitt 1. Das Protokoll erwacht im klaren Licht; Standplatz über dem Kern, Gewehr bereit.",
+    "end": "Abschnitt 1 gesichert. Das Licht bleibt ruhig. Weiter zum nächsten Feld."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 28
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 34
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 40
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 46
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 52
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 58
+    }
+   ],
+   "arena": true,
+   "rank": 1,
+   "diff": 0.75
+  },
+  {
+   "n": 2,
+   "label": "2",
+   "chapter": 0,
+   "name": "Zwei Tore",
+   "function": "Zwei Zugänge",
+   "text": "Zwei Zugänge. West und Nord. Standplatz über dem Kern, die Gegner kommen von 2 Seiten.",
+   "special": "West und Nord",
+   "focus": "Umdrehen, Reihenfolge",
+   "weather": "holo_wind",
+   "map": "res://data/levels/missions/mission_02.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire"
+   ],
+   "traps": [
+    "barricade"
+   ],
+   "features": [],
+   "new_towers": [
+    "fire"
+   ],
+   "new_enemies": [
+    "flicker_swarm",
+    "skitter"
+   ],
+   "gold": 280,
+   "lives": 20,
+   "lanes": 2.0,
+   "comms": {
+    "start": "Lichtfeld, Abschnitt 2. Das Protokoll erwacht im klaren Licht; Standplatz über dem Kern, Gewehr bereit.",
+    "end": "Abschnitt 2 gesichert. Das Licht bleibt ruhig. Weiter zum nächsten Feld."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 30
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 30,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 36
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 14,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "d": 3.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 42
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 1,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 48
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 34,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 54
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 16,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 66
+    }
+   ],
+   "arena": true,
+   "rank": 2,
+   "diff": 0.85
+  },
+  {
+   "n": 3,
+   "label": "3",
+   "chapter": 0,
+   "name": "Dreizack",
+   "function": "Drei Zugänge, Wächter",
+   "text": "Drei Zugänge, Wächter. Süden kommt dazu, erster Wächter. Standplatz über dem Kern, die Gegner kommen von 3 Seiten.",
+   "special": "Süden kommt dazu, erster Wächter",
+   "focus": "Rundumblick",
+   "weather": "holo",
+   "map": "res://data/levels/missions/mission_03.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply"
+   ],
+   "new_towers": [
+    "teahouse"
+   ],
+   "new_enemies": [
+    "boss_orun_minor"
+   ],
+   "gold": 330,
+   "lives": 20,
+   "lanes": 3.0,
+   "comms": {
+    "start": "Lichtfeld, Abschnitt 3. Das Protokoll erwacht im klaren Licht; Standplatz über dem Kern, Gewehr bereit.",
+    "end": "Abschnitt 3 gesichert. Das Licht bleibt ruhig. Weiter zum nächsten Feld."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 32
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 31,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 38
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 15,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 44
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 50
+    },
+    {
+     "title": "Wächter",
+     "groups": [
+      {
+       "t": "boss_orun_minor",
+       "n": 1,
+       "p": 1,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 6.0,
+       "p": 2,
+       "i": 0.9
+      }
+     ],
+     "miniboss": true,
+     "reward": 56
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 17,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 39,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 80
+    }
+   ],
+   "arena": true,
+   "rank": 3,
+   "diff": 0.92
+  },
+  {
+   "n": 4,
+   "label": "4",
+   "chapter": 0,
+   "name": "Nadelöhr",
+   "function": "Vier Zugänge, Gabelung",
+   "text": "Vier Zugänge, Gabelung. Engstellen, langer Umweg im Süden. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Engstellen, langer Umweg im Süden",
+   "focus": "Timing, Flächenschuss",
+   "weather": "holo_regen",
+   "map": "res://data/levels/missions/mission_04.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid"
+   ],
+   "new_towers": [
+    "chain"
+   ],
+   "new_enemies": [
+    "mist_colossus"
+   ],
+   "gold": 358,
+   "lives": 20,
+   "lanes": 3.55,
+   "comms": {
+    "start": "Lichtfeld, Abschnitt 4. Das Protokoll erwacht im klaren Licht; Standplatz über dem Kern, Gewehr bereit.",
+    "end": "Abschnitt 4 gesichert. Das Licht bleibt ruhig. Weiter zum nächsten Feld."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 34
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 33,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 40
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 16,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 46
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 52
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 58
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 38,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 18,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 82
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 88
+    }
+   ],
+   "arena": true,
+   "rank": 4,
+   "diff": 1.0
+  },
+  {
+   "n": 5,
+   "label": "5",
+   "chapter": 0,
+   "name": "Lichtkern",
+   "function": "Vier Zugänge, Ecke, Anomalie",
+   "text": "Vier Zugänge, Ecke, Anomalie. Das Finale der Welt. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Das Finale der Welt",
+   "focus": "Alles",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_05.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "boss_vey"
+   ],
+   "gold": 460,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Lichtfeld, Abschnitt 5. Das Protokoll erwacht im klaren Licht; Standplatz über dem Kern, Gewehr bereit.",
+    "end": "Abschnitt 5 gesichert. Das Licht bleibt ruhig. Weiter zum nächsten Feld."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 36
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 35,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 42
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 17,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 48
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 54
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 40,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 72
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 46,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Vor der Anomalie",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 22,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 96
+    },
+    {
+     "title": "Anomalie: Schwebeträgerin",
+     "groups": [
+      {
+       "t": "boss_vey",
+       "n": 1,
+       "p": 3,
+       "i": 0.0,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 48,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 8.0,
+       "p": 3,
+       "i": 0.8
+      }
+     ],
+     "boss": true,
+     "reward": 102
+    }
+   ],
+   "boss_hp": 0.12,
+   "boss_name": "Anomalie: Schwebeträgerin",
+   "arena": true,
+   "rank": 5,
+   "diff": 1.0
+  },
+  {
+   "n": 6,
+   "label": "6",
+   "chapter": 1,
+   "name": "Wandlauf",
+   "function": "Ein Zugang, Wandlauf",
+   "text": "Ein Zugang, Wandlauf. Gegner laufen an der Wand. Standplatz über dem Kern, die Gegner kommen von 1 Seite.",
+   "special": "Gegner laufen an der Wand",
+   "focus": "Zielen an der Wand",
+   "weather": "holo_wind",
+   "map": "res://data/levels/missions/mission_06.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [
+    "sniper"
+   ],
+   "new_enemies": [
+    "glass_angel"
+   ],
+   "gold": 270,
+   "lives": 20,
+   "lanes": 1.0,
+   "comms": {
+    "start": "Kernstation, Ebene 1. Anthrazit und Cyan, die Anlage selbst. Signaturen in den Zuläufen.",
+    "end": "Ebene 1 hält. Die Station meldet stabile Energie. Nächste Ebene freigegeben."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 38
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 33,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 44
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 16,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 50
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 8,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 35,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      }
+     ],
+     "reward": 56
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 38,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 18,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 41,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      }
+     ],
+     "reward": 80
+    }
+   ],
+   "arena": true,
+   "rank": 6,
+   "diff": 1.015
+  },
+  {
+   "n": 7,
+   "label": "7",
+   "chapter": 1,
+   "name": "Hochdeck",
+   "function": "Zwei Zugänge, Lauf auf Augenhöhe",
+   "text": "Zwei Zugänge, Lauf auf Augenhöhe. Nord läuft auf deiner Höhe. Standplatz über dem Kern, die Gegner kommen von 2 Seiten.",
+   "special": "Nord läuft auf deiner Höhe",
+   "focus": "Oben und unten",
+   "weather": "holo_niesel",
+   "map": "res://data/levels/missions/mission_07.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 320,
+   "lives": 20,
+   "lanes": 2.0,
+   "comms": {
+    "start": "Kernstation, Ebene 2. Anthrazit und Cyan, die Anlage selbst. Signaturen in den Zuläufen.",
+    "end": "Ebene 2 hält. Die Station meldet stabile Energie. Nächste Ebene freigegeben."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 40
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 34,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 46
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 16,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "d": 3.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 52
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 1,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 58
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 38,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "p": 1,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 41,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 82
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      }
+     ],
+     "reward": 88
+    }
+   ],
+   "arena": true,
+   "rank": 7,
+   "diff": 1.08
+  },
+  {
+   "n": 8,
+   "label": "8",
+   "chapter": 1,
+   "name": "Dreifach",
+   "function": "Drei Zugänge, Wächter",
+   "text": "Drei Zugänge, Wächter. Süden kommt dazu, erster Wächter. Standplatz über dem Kern, die Gegner kommen von 3 Seiten.",
+   "special": "Süden kommt dazu, erster Wächter",
+   "focus": "Rundumblick",
+   "weather": "holo_nebel",
+   "map": "res://data/levels/missions/mission_08.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [
+    "mortar"
+   ],
+   "new_enemies": [],
+   "gold": 370,
+   "lives": 20,
+   "lanes": 3.0,
+   "comms": {
+    "start": "Kernstation, Ebene 3. Anthrazit und Cyan, die Anlage selbst. Signaturen in den Zuläufen.",
+    "end": "Ebene 3 hält. Die Station meldet stabile Energie. Nächste Ebene freigegeben."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 42
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 35,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 48
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 17,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 54
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 1,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 39,
+       "d": 5.0,
+       "p": 2,
+       "i": 0.14
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Wächter",
+     "groups": [
+      {
+       "t": "boss_orun_minor",
+       "n": 1,
+       "p": 2,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 6.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "miniboss": true,
+     "reward": 72
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "p": 0,
+       "i": 1.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 20,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 96
+    }
+   ],
+   "arena": true,
+   "rank": 8,
+   "diff": 0.994
+  },
+  {
+   "n": 9,
+   "label": "9",
+   "chapter": 1,
+   "name": "Hochbahn",
+   "function": "Vier Zugänge",
+   "text": "Vier Zugänge. Lange Sichtlinien, Südwest an der Wand. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Lange Sichtlinien, Südwest an der Wand",
+   "focus": "Vier Richtungen",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_09.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "e:schild",
+    "spotter",
+    "carrier"
+   ],
+   "gold": 420,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Kernstation, Ebene 4. Anthrazit und Cyan, die Anlage selbst. Signaturen in den Zuläufen.",
+    "end": "Ebene 4 hält. Die Station meldet stabile Energie. Nächste Ebene freigegeben."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 44
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 38,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 50
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 18,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 56
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 42,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 21,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      }
+     ],
+     "reward": 80
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 86
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 47,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 92
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 22,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 3.0,
+       "p": 2,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 98
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 2,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.9
+      }
+     ],
+     "reward": 104
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 12,
+       "p": 3,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 51,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 110
+    }
+   ],
+   "arena": true,
+   "rank": 9,
+   "diff": 0.972
+  },
+  {
+   "n": 10,
+   "label": "10",
+   "chapter": 1,
+   "name": "Nebenkern",
+   "function": "Vier Zugänge, Ecke, Anomalie",
+   "text": "Vier Zugänge, Ecke, Anomalie. Das Finale der Welt. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Das Finale der Welt",
+   "focus": "Alles",
+   "weather": "holo_sturm",
+   "map": "res://data/levels/missions/mission_10.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "boss_kael"
+   ],
+   "gold": 500,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Kernstation, Ebene 5. Anthrazit und Cyan, die Anlage selbst. Signaturen in den Zuläufen.",
+    "end": "Ebene 5 hält. Die Station meldet stabile Energie. Nächste Ebene freigegeben."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 46
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 39,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 52
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      }
+     ],
+     "reward": 58
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 10,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 21,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      }
+     ],
+     "reward": 82
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 88
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 48,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 94
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 23,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 3.0,
+       "p": 2,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 100
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 2,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.9
+      }
+     ],
+     "reward": 106
+    },
+    {
+     "title": "Vor der Anomalie",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 12,
+       "p": 3,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 52,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 112
+    },
+    {
+     "title": "Anomalie: Kältekern",
+     "groups": [
+      {
+       "t": "boss_kael",
+       "n": 1,
+       "p": 0,
+       "i": 0.0,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 53,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 8.0,
+       "p": 0,
+       "i": 0.8
+      }
+     ],
+     "boss": true,
+     "reward": 118
+    }
+   ],
+   "boss_hp": 0.25,
+   "boss_name": "Anomalie: Kältekern",
+   "arena": true,
+   "rank": 10,
+   "diff": 1.08
+  },
+  {
+   "n": 11,
+   "label": "11",
+   "chapter": 2,
+   "name": "Steilwand",
+   "function": "Ein Zugang, Wandlauf",
+   "text": "Ein Zugang, Wandlauf. Gegner laufen an der Wand. Standplatz über dem Kern, die Gegner kommen von 1 Seite.",
+   "special": "Gegner laufen an der Wand",
+   "focus": "Zielen an der Wand",
+   "weather": "holo_nebel",
+   "map": "res://data/levels/missions/mission_11.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 320,
+   "lives": 20,
+   "lanes": 1.0,
+   "comms": {
+    "start": "Tiefe, Sektor 1. Wenig Licht, nur Neon und Silhouetten. Die Wege sind lesbar, die Zeit knapp.",
+    "end": "Sektor 1 frei. Die Tiefe schweigt wieder. Tiefer."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 48
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 37,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 54
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 18,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 41,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      }
+     ],
+     "reward": 72
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "p": 0,
+       "i": 1.1,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 21,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 96
+    }
+   ],
+   "arena": true,
+   "rank": 11,
+   "diff": 1.09
+  },
+  {
+   "n": 12,
+   "label": "12",
+   "chapter": 2,
+   "name": "Über dem Kopf",
+   "function": "Zwei Zugänge, Lauf auf Augenhöhe",
+   "text": "Zwei Zugänge, Lauf auf Augenhöhe. Nord läuft auf deiner Höhe. Standplatz über dem Kern, die Gegner kommen von 2 Seiten.",
+   "special": "Nord läuft auf deiner Höhe",
+   "focus": "Oben und unten",
+   "weather": "holo_regen",
+   "map": "res://data/levels/missions/mission_12.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "mist_weaver"
+   ],
+   "gold": 370,
+   "lives": 20,
+   "lanes": 2.0,
+   "comms": {
+    "start": "Tiefe, Sektor 2. Wenig Licht, nur Neon und Silhouetten. Die Wege sind lesbar, die Zeit knapp.",
+    "end": "Sektor 2 frei. Die Tiefe schweigt wieder. Tiefer."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 50
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 38,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 56
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 18,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 18,
+       "d": 3.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 1,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 9,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 42,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 2.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 80
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 5,
+       "p": 0,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 3.0,
+       "p": 1,
+       "i": 0.8
+      }
+     ],
+     "reward": 86
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 92
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 47,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 98
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 22,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 104
+    }
+   ],
+   "arena": true,
+   "rank": 12,
+   "diff": 1.16
+  },
+  {
+   "n": 13,
+   "label": "13",
+   "chapter": 2,
+   "name": "Dreiklang",
+   "function": "Drei Zugänge, Wächter",
+   "text": "Drei Zugänge, Wächter. Süden kommt dazu, erster Wächter. Standplatz über dem Kern, die Gegner kommen von 3 Seiten.",
+   "special": "Süden kommt dazu, erster Wächter",
+   "focus": "Rundumblick",
+   "weather": "holo",
+   "map": "res://data/levels/missions/mission_13.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 420,
+   "lives": 20,
+   "lanes": 3.0,
+   "comms": {
+    "start": "Tiefe, Sektor 3. Wenig Licht, nur Neon und Silhouetten. Die Wege sind lesbar, die Zeit knapp.",
+    "end": "Sektor 3 frei. Die Tiefe schweigt wieder. Tiefer."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 15,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 52
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 39,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 58
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 4,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 0,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 10,
+       "p": 1,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "d": 5.0,
+       "p": 2,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Wächter",
+     "groups": [
+      {
+       "t": "boss_orun_minor",
+       "n": 1,
+       "p": 2,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 6.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "miniboss": true,
+     "reward": 82
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 0,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 21,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 88
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 5,
+       "p": 1,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 3.0,
+       "p": 2,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 94
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 100
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 49,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 106
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 23,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 3.0,
+       "p": 2,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 112
+    }
+   ],
+   "arena": true,
+   "rank": 13,
+   "diff": 1.067
+  },
+  {
+   "n": 14,
+   "label": "14",
+   "chapter": 2,
+   "name": "Engpass",
+   "function": "Vier Zugänge, Gabelung",
+   "text": "Vier Zugänge, Gabelung. Engstellen, langer Umweg im Süden. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Engstellen, langer Umweg im Süden",
+   "focus": "Timing, Flächenschuss",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_14.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "e:phantom"
+   ],
+   "gold": 448,
+   "lives": 20,
+   "lanes": 3.55,
+   "comms": {
+    "start": "Tiefe, Sektor 4. Wenig Licht, nur Neon und Silhouetten. Die Wege sind lesbar, die Zeit knapp.",
+    "end": "Sektor 4 frei. Die Tiefe schweigt wieder. Tiefer."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 54
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 41,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 72
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 10,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 44,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 22,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 5,
+       "p": 3,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 3.0,
+       "p": 0,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "phantom"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 96
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 102
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 51,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 108
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 24,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 114
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 120
+    }
+   ],
+   "arena": true,
+   "rank": 14,
+   "diff": 1.16
+  },
+  {
+   "n": 15,
+   "label": "15",
+   "chapter": 2,
+   "name": "Tiefenkern",
+   "function": "Vier Zugänge, Ecke, Anomalie",
+   "text": "Vier Zugänge, Ecke, Anomalie. Das Finale der Welt. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Das Finale der Welt",
+   "focus": "Alles",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_15.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "e:unbeugsam",
+    "boss_orun"
+   ],
+   "gold": 550,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Tiefe, Sektor 5. Wenig Licht, nur Neon und Silhouetten. Die Wege sind lesbar, die Zeit knapp.",
+    "end": "Sektor 5 frei. Die Tiefe schweigt wieder. Tiefer."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 56
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 20,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 11,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 47,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 80
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 86
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 23,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 92
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 5,
+       "p": 3,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 3.0,
+       "p": 0,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "phantom"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 98
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 104
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 53,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 110
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 25,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 116
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 26,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "unbeugsam"
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 122
+    },
+    {
+     "title": "Vor der Anomalie",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 13,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 57,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 128
+    },
+    {
+     "title": "Anomalie: Panzerwächter",
+     "groups": [
+      {
+       "t": "boss_orun",
+       "n": 1,
+       "p": 1,
+       "i": 0.0,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 58,
+       "d": 4.0,
+       "p": 2,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 8.0,
+       "p": 1,
+       "i": 0.8
+      }
+     ],
+     "boss": true,
+     "reward": 134
+    }
+   ],
+   "boss_hp": 0.75,
+   "boss_name": "Anomalie: Panzerwächter",
+   "arena": true,
+   "rank": 15,
+   "diff": 1.16
+  },
+  {
+   "n": 16,
+   "label": "16",
+   "chapter": 3,
+   "name": "Rote Wand",
+   "function": "Ein Zugang, Wandlauf",
+   "text": "Ein Zugang, Wandlauf. Gegner laufen an der Wand. Standplatz über dem Kern, die Gegner kommen von 1 Seite.",
+   "special": "Gegner laufen an der Wand",
+   "focus": "Zielen an der Wand",
+   "weather": "holo_wind",
+   "map": "res://data/levels/missions/mission_16.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 370,
+   "lives": 20,
+   "lanes": 1.0,
+   "comms": {
+    "start": "Endkern, Ring 1. Rote Signaturen im Nebel. Alles, was du gelernt hast, zugleich.",
+    "end": "Ring 1 gehalten. Der Kern pulst. Der Weg zum Reaktor bleibt offen."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 16,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 58
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 41,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 19,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 6,
+       "d": 10.0,
+       "p": 0,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 10,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 44,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      }
+     ],
+     "reward": 82
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 0,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 2.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 88
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "p": 0,
+       "i": 1.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 94
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 48,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 0,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 100
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 23,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 106
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 112
+    }
+   ],
+   "red_light": true,
+   "arena": true,
+   "rank": 16,
+   "diff": 1.175
+  },
+  {
+   "n": 17,
+   "label": "17",
+   "chapter": 3,
+   "name": "Kreuzhöhe",
+   "function": "Zwei Zugänge, Lauf auf Augenhöhe",
+   "text": "Zwei Zugänge, Lauf auf Augenhöhe. Nord läuft auf deiner Höhe. Standplatz über dem Kern, die Gegner kommen von 2 Seiten.",
+   "special": "Nord läuft auf deiner Höhe",
+   "focus": "Oben und unten",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_17.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 420,
+   "lives": 20,
+   "lanes": 2.0,
+   "comms": {
+    "start": "Endkern, Ring 2. Rote Signaturen im Nebel. Alles, was du gelernt hast, zugleich.",
+    "end": "Ring 2 gehalten. Der Kern pulst. Der Weg zum Reaktor bleibt offen."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 60
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 42,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 20,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 3.0,
+       "p": 1,
+       "i": 1.0
+      }
+     ],
+     "reward": 72
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 1,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 10,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 46,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 2.0,
+       "p": 0,
+       "i": 0.9
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 5,
+       "p": 0,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 22,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.8
+      }
+     ],
+     "reward": 96
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "schild"
+      }
+     ],
+     "reward": 102
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 51,
+       "p": 0,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 6.0,
+       "p": 1,
+       "i": 1.2
+      }
+     ],
+     "reward": 108
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 24,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      }
+     ],
+     "reward": 114
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      }
+     ],
+     "reward": 120
+    }
+   ],
+   "red_light": true,
+   "arena": true,
+   "rank": 17,
+   "diff": 1.25
+  },
+  {
+   "n": 18,
+   "label": "18",
+   "chapter": 3,
+   "name": "Dreifront",
+   "function": "Drei Zugänge, Wächter",
+   "text": "Drei Zugänge, Wächter. Süden kommt dazu, erster Wächter. Standplatz über dem Kern, die Gegner kommen von 3 Seiten.",
+   "special": "Süden kommt dazu, erster Wächter",
+   "focus": "Rundumblick",
+   "weather": "holo_sturm",
+   "map": "res://data/levels/missions/mission_18.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 470,
+   "lives": 20,
+   "lanes": 3.0,
+   "comms": {
+    "start": "Endkern, Ring 3. Rote Signaturen im Nebel. Alles, was du gelernt hast, zugleich.",
+    "end": "Ring 3 gehalten. Der Kern pulst. Der Weg zum Reaktor bleibt offen."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 17,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 62
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 43,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 68
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 20,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 20,
+       "d": 3.0,
+       "p": 0,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 74
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 21,
+       "d": 4.0,
+       "p": 1,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 0,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 80
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 11,
+       "p": 1,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 47,
+       "d": 5.0,
+       "p": 2,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 86
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 5,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 2.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 92
+    },
+    {
+     "title": "Wächter",
+     "groups": [
+      {
+       "t": "boss_orun_minor",
+       "n": 1,
+       "p": 0,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 6.0,
+       "p": 1,
+       "i": 0.9
+      }
+     ],
+     "miniboss": true,
+     "reward": 98
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 8.0,
+       "p": 2,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 1,
+       "i": 2.5,
+       "e": "phantom"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 104
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 52,
+       "p": 2,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 6.0,
+       "p": 0,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 110
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 25,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 3.0,
+       "p": 1,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 116
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 1,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "d": 4.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 122
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 13,
+       "p": 2,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 56,
+       "d": 5.0,
+       "p": 0,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 2,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 128
+    }
+   ],
+   "red_light": true,
+   "arena": true,
+   "rank": 18,
+   "diff": 1.15
+  },
+  {
+   "n": 19,
+   "label": "19",
+   "chapter": 3,
+   "name": "Vier Fronten",
+   "function": "Vier Zugänge",
+   "text": "Vier Zugänge. Lange Sichtlinien, Südwest an der Wand. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Lange Sichtlinien, Südwest an der Wand",
+   "focus": "Vier Richtungen",
+   "weather": "holo_gewitter",
+   "map": "res://data/levels/missions/mission_19.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [],
+   "gold": 520,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Endkern, Ring 4. Rote Signaturen im Nebel. Alles, was du gelernt hast, zugleich.",
+    "end": "Ring 4 gehalten. Der Kern pulst. Der Weg zum Reaktor bleibt offen."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 64
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 46,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 10,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 70
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 22,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 76
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 82
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 11,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 50,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 88
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 6,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 94
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 6,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 24,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 100
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 6,
+       "p": 3,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 3.0,
+       "p": 0,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "phantom"
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 106
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 25,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 112
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 56,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 118
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 27,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 124
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 6,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "unbeugsam"
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 130
+    },
+    {
+     "title": "Phantomfracht",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 14,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 60,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 136
+    },
+    {
+     "title": "Schwere Front",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 7,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 28,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 142
+    }
+   ],
+   "red_light": true,
+   "arena": true,
+   "rank": 19,
+   "diff": 1.125
+  },
+  {
+   "n": 20,
+   "label": "20",
+   "chapter": 3,
+   "name": "Der stille Kern",
+   "function": "Vier Zugänge, Ecke, Anomalie",
+   "text": "Vier Zugänge, Ecke, Anomalie. Das Finale der Welt. Standplatz über dem Kern, die Gegner kommen von 4 Seiten.",
+   "special": "Das Finale der Welt",
+   "focus": "Alles",
+   "weather": "holo_sturm",
+   "map": "res://data/levels/missions/mission_20.json",
+   "kind": "bridge",
+   "towers": [
+    "arrow",
+    "ice",
+    "fire",
+    "teahouse",
+    "chain",
+    "sniper",
+    "mortar"
+   ],
+   "traps": [
+    "barricade",
+    "laserfence"
+   ],
+   "features": [
+    "supply",
+    "raid",
+    "gun_sniper"
+   ],
+   "new_towers": [],
+   "new_enemies": [
+    "boss_brood"
+   ],
+   "gold": 600,
+   "lives": 20,
+   "lanes": 4.0,
+   "comms": {
+    "start": "Endkern, Ring 5. Rote Signaturen im Nebel. Alles, was du gelernt hast, zugleich.",
+    "end": "Ring 5 gehalten. Der Kern pulst. Der Weg zum Reaktor bleibt offen."
+   },
+   "waves": [
+    {
+     "title": "Vorhut",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 19,
+       "p": 0,
+       "i": 1.4,
+       "d": 0.0
+      }
+     ],
+     "reward": 66
+    },
+    {
+     "title": "Lauerer",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 47,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 72
+    },
+    {
+     "title": "Schwarm",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 22,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 22,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 78
+    },
+    {
+     "title": "Hetzer",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 5,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 23,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 7,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "schild"
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 84
+    },
+    {
+     "title": "Zwei Trupps",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 11,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 51,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 11,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 90
+    },
+    {
+     "title": "Schwere Schritte",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 6,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 24,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 96
+    },
+    {
+     "title": "Flieger",
+     "groups": [
+      {
+       "t": "carrier",
+       "n": 6,
+       "p": 2,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "skitter",
+       "n": 25,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 102
+    },
+    {
+     "title": "Spähtrupp",
+     "groups": [
+      {
+       "t": "mist_weaver",
+       "n": 6,
+       "p": 3,
+       "i": 2.5,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 3.0,
+       "p": 0,
+       "i": 0.8
+      },
+      {
+       "t": "mist_walker",
+       "n": 8,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "phantom"
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 12,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 108
+    },
+    {
+     "title": "Fracht",
+     "groups": [
+      {
+       "t": "mist_walker",
+       "n": 26,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "d": 8.0,
+       "p": 1,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 114
+    },
+    {
+     "title": "Druck",
+     "groups": [
+      {
+       "t": "flicker_swarm",
+       "n": 57,
+       "p": 1,
+       "i": 0.14,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "d": 6.0,
+       "p": 2,
+       "i": 1.2
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 120
+    },
+    {
+     "title": "Flut",
+     "groups": [
+      {
+       "t": "skitter",
+       "n": 27,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 27,
+       "d": 3.0,
+       "p": 3,
+       "i": 1.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 13,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 126
+    },
+    {
+     "title": "Doppelschwarm",
+     "groups": [
+      {
+       "t": "mist_colossus",
+       "n": 7,
+       "p": 3,
+       "i": 5.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 28,
+       "d": 4.0,
+       "p": 0,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 9,
+       "d": 10.0,
+       "p": 3,
+       "i": 2.5,
+       "e": "unbeugsam"
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 1,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 132
+    },
+    {
+     "title": "Phantomfracht",
+     "groups": [
+      {
+       "t": "glass_angel",
+       "n": 14,
+       "p": 0,
+       "i": 1.2,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 61,
+       "d": 5.0,
+       "p": 1,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 2,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 138
+    },
+    {
+     "title": "Vor der Anomalie",
+     "groups": [
+      {
+       "t": "spotter",
+       "n": 7,
+       "p": 1,
+       "i": 3.0,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 29,
+       "d": 2.0,
+       "p": 2,
+       "i": 0.9
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 3,
+       "i": 0.9,
+       "d": 0.0
+      },
+      {
+       "t": "mist_walker",
+       "n": 14,
+       "p": 0,
+       "i": 0.9,
+       "d": 0.0
+      }
+     ],
+     "reward": 144
+    },
+    {
+     "title": "Anomalie: Brutkern",
+     "groups": [
+      {
+       "t": "boss_brood",
+       "n": 1,
+       "p": 2,
+       "i": 0.0,
+       "d": 0.0
+      },
+      {
+       "t": "flicker_swarm",
+       "n": 64,
+       "d": 4.0,
+       "p": 3,
+       "i": 0.14
+      },
+      {
+       "t": "mist_walker",
+       "n": 29,
+       "d": 8.0,
+       "p": 2,
+       "i": 0.8
+      }
+     ],
+     "boss": true,
+     "reward": 150
+    }
+   ],
+   "boss_hp": 0.6,
+   "boss_name": "Anomalie: Brutkern",
+   "red_light": true,
+   "arena": true,
+   "rank": 20,
+   "diff": 1.25
+  }
+ ]
+}

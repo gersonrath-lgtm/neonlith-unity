@@ -1,0 +1,46 @@
+{
+ "_class": "MenuCameraConfig",
+ "_source": "data/menu_camera.tres",
+ "menu_camera_position": {
+  "x": -9.0,
+  "y": -1.8,
+  "z": 7.0
+ },
+ "menu_camera_target": {
+  "x": -2.0,
+  "y": -1.0,
+  "z": -60.0
+ },
+ "menu_camera_drift_speed": 0.05,
+ "menu_camera_drift_amplitude": {
+  "x": 0.6,
+  "y": 0.25,
+  "z": 1.0
+ },
+ "transition_duration": 4.2,
+ "return_duration": 2.8,
+ "transition_easing": "smootherstep",
+ "transition_control_points": [
+  [
+   -8.6,
+   -1.4,
+   3.5
+  ],
+  [
+   -7.4,
+   1.9,
+   1.4
+  ],
+  [
+   -3.6,
+   3.0,
+   0.5
+  ]
+ ],
+ "menu_fade_duration": 0.4,
+ "hud_fade_duration": 0.6,
+ "camera_collision_margin": 0.45,
+ "cinematic_motion_enabled": true,
+ "vignette_strength": 0.5,
+ "cut_fade_duration": 0.35
+}

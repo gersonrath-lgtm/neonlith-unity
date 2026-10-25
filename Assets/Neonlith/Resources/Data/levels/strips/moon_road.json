@@ -1,0 +1,196 @@
+{
+ "name": "Mondstraße",
+ "tile": 2.0,
+ "columns": "BRRRBRRRB",
+ "berm_height": 0.525,
+ "berm_top_hw": 0.65,
+ "berm_foot_hw": 0.65,
+ "road_height": 0.06,
+ "road_half_width": 1.5,
+ "outer_build_step": 2,
+ "inner_build_step": 2,
+ "portal_out": 3.0,
+ "atlas": "res://assets/models/levels/moon_road/moon_road_atlas.png",
+ "normal": "res://assets/models/levels/moon_road/moon_road_normal.png",
+ "road_tex": "res://assets/models/levels/moon_road/moon_road_surface.png",
+ "road_normal": "res://assets/models/levels/moon_road/moon_road_surface_normal.png",
+ "road_scale": 4.0,
+ "plain_cycle": [
+  "plain_a",
+  "plain_b",
+  "plain_a",
+  "plain_d",
+  "service",
+  "plain_b",
+  "plain_e",
+  "plain_a",
+  "ruin",
+  "plain_b",
+  "plain_c",
+  "plain_f"
+ ],
+ "lamp_dark": "lamp_dark",
+ "lamp_dark_every": 3,
+ "start": "start",
+ "lamp": "lamp",
+ "lamp_spacing": 8,
+ "cap": "cap",
+ "lamp_color": "dcf4ff",
+ "modules": {
+  "plain_a": {
+   "path": "res://assets/models/levels/moon_road/plain_a.glb",
+   "length": 1
+  },
+  "plain_a_o": {
+   "path": "res://assets/models/levels/moon_road/plain_a_o.glb",
+   "length": 1
+  },
+  "service": {
+   "path": "res://assets/models/levels/moon_road/service.glb",
+   "length": 1
+  },
+  "service_o": {
+   "path": "res://assets/models/levels/moon_road/service_o.glb",
+   "length": 1
+  },
+  "ruin": {
+   "path": "res://assets/models/levels/moon_road/ruin.glb",
+   "length": 1,
+   "blocked": [
+    [
+     0,
+     0
+    ]
+   ]
+  },
+  "ruin_o": {
+   "path": "res://assets/models/levels/moon_road/ruin_o.glb",
+   "length": 1
+  },
+  "plain_b": {
+   "path": "res://assets/models/levels/moon_road/plain_b.glb",
+   "length": 1
+  },
+  "plain_b_o": {
+   "path": "res://assets/models/levels/moon_road/plain_b_o.glb",
+   "length": 1
+  },
+  "plain_c": {
+   "path": "res://assets/models/levels/moon_road/plain_c.glb",
+   "length": 1
+  },
+  "plain_c_o": {
+   "path": "res://assets/models/levels/moon_road/plain_c_o.glb",
+   "length": 1
+  },
+  "plain_d": {
+   "path": "res://assets/models/levels/moon_road/plain_d.glb",
+   "length": 1
+  },
+  "plain_d_o": {
+   "path": "res://assets/models/levels/moon_road/plain_d_o.glb",
+   "length": 1
+  },
+  "plain_e": {
+   "path": "res://assets/models/levels/moon_road/plain_e.glb",
+   "length": 1
+  },
+  "plain_e_o": {
+   "path": "res://assets/models/levels/moon_road/plain_e_o.glb",
+   "length": 1
+  },
+  "plain_f": {
+   "path": "res://assets/models/levels/moon_road/plain_f.glb",
+   "length": 1
+  },
+  "plain_f_o": {
+   "path": "res://assets/models/levels/moon_road/plain_f_o.glb",
+   "length": 1
+  },
+  "start": {
+   "path": "res://assets/models/levels/moon_road/start.glb",
+   "length": 1
+  },
+  "lamp": {
+   "path": "res://assets/models/levels/moon_road/lamp.glb",
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -4.95,
+    4.95
+   ]
+  },
+  "lamp_dark": {
+   "path": "res://assets/models/levels/moon_road/lamp_dark.glb",
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -4.95,
+    4.95
+   ]
+  },
+  "lamp_o": {
+   "path": "res://assets/models/levels/moon_road/lamp_o.glb",
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -4.95,
+    4.95
+   ]
+  },
+  "lamp_dark_o": {
+   "path": "res://assets/models/levels/moon_road/lamp_dark_o.glb",
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -4.95,
+    4.95
+   ]
+  },
+  "cap": {
+   "path": "res://assets/models/levels/moon_road/cap.glb",
+   "length": 0
+  }
+ },
+ "base": {
+  "path": "res://assets/models/levels/moon_road/base.glb",
+  "rows": 13,
+  "tunnel_rows": 3,
+  "width": 15,
+  "plinth": {
+   "out": 0.5,
+   "height": 0.6,
+   "front": -0.3
+  },
+  "gates": {
+   "mode": "slide",
+   "left": "res://assets/models/levels/moon_road/base_gate_left.glb",
+   "right": "res://assets/models/levels/moon_road/base_gate_right.glb",
+   "x": [
+    -4.0,
+    4.0
+   ],
+   "y": 0.05,
+   "z": 0.12,
+   "segments": 1,
+   "panel_width": 2.73,
+   "travel": 2.45,
+   "half_width": 2.7,
+   "height": 3.6
+  }
+ },
+ "glow_tiles": 655872,
+ "atlas_grid": [
+  4,
+  6
+ ],
+ "glow_edge_tiles": 655360
+}

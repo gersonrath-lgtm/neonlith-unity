@@ -1,0 +1,174 @@
+{
+ "name": "Nebelbrücke (ein Weg, ohne Festung)",
+ "tile": 2.0,
+ "columns": "BRRRB",
+ "berm_height": 0.525,
+ "berm_top_hw": 0.65,
+ "berm_foot_hw": 0.65,
+ "road_height": 0.525,
+ "road_half_width": 1.5,
+ "outer_build_step": 2,
+ "inner_build_step": 2,
+ "portal_out": 3.0,
+ "atlas": "res://assets/models/levels/moon_road/moon_road_atlas.png",
+ "normal": "res://assets/models/levels/moon_road/moon_road_normal.png",
+ "road_tex": "res://assets/models/levels/moon_road/moon_road_surface.png",
+ "road_normal": "res://assets/models/levels/moon_road/moon_road_surface_normal.png",
+ "road_scale": 4.0,
+ "plain_cycle": [
+  "plain_a",
+  "plain_b",
+  "plain_a",
+  "plain_d",
+  "service",
+  "plain_b",
+  "plain_e",
+  "plain_a",
+  "ruin",
+  "plain_b",
+  "plain_c",
+  "plain_f"
+ ],
+ "lamp_dark": "lamp_dark",
+ "lamp_dark_every": 3,
+ "start": "start",
+ "lamp": "lamp",
+ "lamp_spacing": 8,
+ "cap": "cap",
+ "lamp_color": "dcf4ff",
+ "modules": {
+  "plain_a": {
+   "length": 1
+  },
+  "plain_a_o": {
+   "length": 1
+  },
+  "service": {
+   "length": 1
+  },
+  "service_o": {
+   "length": 1
+  },
+  "ruin": {
+   "length": 1,
+   "blocked": [
+    [
+     0,
+     0
+    ]
+   ]
+  },
+  "ruin_o": {
+   "length": 1
+  },
+  "plain_b": {
+   "length": 1
+  },
+  "plain_b_o": {
+   "length": 1
+  },
+  "plain_c": {
+   "length": 1
+  },
+  "plain_c_o": {
+   "length": 1
+  },
+  "plain_d": {
+   "length": 1
+  },
+  "plain_d_o": {
+   "length": 1
+  },
+  "plain_e": {
+   "length": 1
+  },
+  "plain_e_o": {
+   "length": 1
+  },
+  "plain_f": {
+   "length": 1
+  },
+  "plain_f_o": {
+   "length": 1
+  },
+  "nobuild": {
+   "length": 1
+  },
+  "start": {
+   "length": 1
+  },
+  "lamp": {
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -2.95,
+    2.95
+   ]
+  },
+  "lamp_dark": {
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -2.95,
+    2.95
+   ]
+  },
+  "lamp_o": {
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -2.95,
+    2.95
+   ]
+  },
+  "lamp_dark_o": {
+   "length": 4,
+   "lamp_rows": [
+    1.5
+   ],
+   "lamp_x": [
+    -2.95,
+    2.95
+   ]
+  },
+  "cap": {
+   "length": 0
+  },
+  "node_curve": {
+   "length": 0,
+   "node": true
+  },
+  "node_tee": {
+   "length": 0,
+   "node": true
+  },
+  "node_cross": {
+   "length": 0,
+   "node": true
+  },
+  "node_straight": {
+   "length": 0,
+   "node": true
+  }
+ },
+ "glow_tiles": 655872,
+ "atlas_grid": [
+  4,
+  6
+ ],
+ "glow_edge_tiles": 655360,
+ "end_rows": 3,
+ "build_margin": 2,
+ "node_modules": {
+  "curve": "node_curve",
+  "tee": "node_tee",
+  "cross": "node_cross",
+  "straight": "node_straight"
+ }
+}

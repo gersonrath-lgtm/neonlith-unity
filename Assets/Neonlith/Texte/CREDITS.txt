@@ -1,0 +1,75 @@
+NEONLITH
+Ein kleines Tower-Defense-Spiel in der Astralen Schlucht.
+
+Spielidee, Programmierung, 3D-Modelle, Logo, Icons, Musik und Soundeffekte
+Erstellt für dieses Projekt. Die Schieferwelt, die Basis, die Türme und die Nebelwesen
+werden im Spiel aus Code aufgebaut (scripts/view3d), die 20 Karten mit tools/level_gen.py
+erzeugt, Logo und Icons mit tools/ui gezeichnet, alle Klänge und die Sci-Fi-Musik (Spiel- und Bossthema) mit
+tools/audio/gen_audio.py synthetisiert. Außer den Gegnermodellen (siehe unten)
+wurden keine fremden Grafiken, Samples oder Musikstücke verwendet (Ausnahmen: die
+Gegnermodelle, das Raumschiff am Controller, die Erdtextur und die Musik von Hauptmenü
+und Mond, siehe unten).
+
+Gegnermodelle (Schwadenläufer, ab 3.25 als Geist mit eigener Textur; Huscher, Dunstkoloss)
+Bereitgestellt vom Rechteinhaber des Projekts, erzeugt mit Tripo (tripo3d.ai),
+für das Spiel verkleinert; Material und Laufanimation im Shader.
+
+Spielerfigur Rook (ab 4.99.65)
+Eigene Gelenkfigur aus Formen im Code (scripts/view3d/robot_models.gd), angelehnt an die Bauart
+beweglicher Gelenkfiguren; kein fremdes Modell.
+
+Raumschiff am Controller (Spielerwaffe)
+"SpaceShip" (https://skfb.ly/oFFXL) by JazOone is licensed under Creative Commons
+Attribution (http://creativecommons.org/licenses/by/4.0/).
+Für das Spiel verkleinert, ausgerichtet und von Orange in Cyanblau umgefärbt;
+Ringanzeige, Mündungsfeuer, Triebwerksleuchten und Schüsse ergänzt
+(assets/models/player/spaceship.glb).
+
+Gewehr in der Hand
+"Gun FS-9 CRANIUM" (https://sketchfab.com/3d-models/gun-fs-9-cranium-71f315bf2a214a4a8b77f08a0012f4c8)
+by alsheuski is licensed under Creative Commons Attribution
+(http://creativecommons.org/licenses/by/4.0/).
+Für das Spiel ausgerichtet und verkleinert, Kimme und Korn ergänzt
+(assets/models/player/gun_cranium.glb).
+
+Kristalle auf der Mondkarte
+"Low Poly Dirt Crystals" (https://sketchfab.com/3d-models/low-poly-dirt-crystals-25334581fbe849cc9e3cbce7b67b5d75)
+by AK is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+Ausschnitt: nur die große Kristallgruppe in Blau, auf den Boden gestellt und verkleinert
+(assets/models/props/crystal_blue.glb, tools/art/props/extract_crystal.py).
+
+Basis (Platzhalter der uebrigen Welten)
+assets/models/base/base.glb: bereitgestellt vom Rechteinhaber des Projekts (erzeugt mit Tripo).
+Die Basis der Mondwelt (assets/models/levels/moon_road/base.glb) ist seit 3.78 im Projekt
+selbst erzeugt (tools/art/levels/generate_moon_base.py).
+
+Musik: Hauptmenü und Mondwelt
+„Mainmenu_Song“ (assets/audio/music/theme_menu.ogg) und „Moon_Song1“
+(assets/audio/music/world_moon.ogg): bereitgestellt vom Rechteinhaber des Projekts,
+für das Spiel nach Ogg Vorbis umgewandelt, laufen in Endlosschleife.
+
+Erde am Mondhimmel
+„Blue Marble: Next Generation“, NASA Earth Observatory (Reto Stöckli, NASA Goddard Space
+Flight Center). Bildmaterial der NASA, gemeinfrei (public domain); für das Spiel auf
+2048 × 1024 Pixel verkleinert (assets/textures/earth_bluemarble_2k.jpg).
+https://earthobservatory.nasa.gov/features/BlueMarble
+
+Schriften
+Bruno Ace von The Bruno Ace Project Authors (Überschriften und Zahlen)
+Lizenz: SIL Open Font License 1.1 (siehe LICENSES/BRUNOACE_OFL.txt)
+https://github.com/googlefonts/Bruno-ace
+
+Oxanium von The Oxanium Project Authors (Texte)
+Lizenz: SIL Open Font License 1.1 (siehe LICENSES/OXANIUM_OFL.txt)
+https://github.com/sevmeyer/oxanium
+
+Inter von Rasmus Andersson und The Inter Project Authors (Ersatz für Sonderzeichen)
+Lizenz: SIL Open Font License 1.1 (siehe LICENSES/INTER_OFL.txt)
+https://github.com/rsms/inter
+
+Engine
+Godot Engine 4.7 – © Godot Engine contributors, Juan Linietsky, Ariel Manzur
+Lizenz: MIT (siehe LICENSES/GODOT.txt). Godot enthält weitere Drittkomponenten,
+deren Lizenzen in LICENSES/GODOT_THIRDPARTY.txt aufgeführt sind.
+
+Danke fürs Spielen!

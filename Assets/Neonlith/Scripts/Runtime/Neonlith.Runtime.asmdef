@@ -1,0 +1,23 @@
+{
+    "name": "Neonlith.Runtime",
+    "rootNamespace": "Neonlith",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.XR.Management",
+        "Unity.XR.OpenXR",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

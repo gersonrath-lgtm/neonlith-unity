@@ -1,0 +1,68 @@
+{
+ "id": 1,
+ "grid_size": 41,
+ "fog_bridge": true,
+ "mission": 16,
+ "bridge": {
+  "set": "res://data/levels/strips/moon_bridge.json",
+  "size": 41,
+  "paths": [
+   [
+    [
+     0,
+     13,
+     0
+    ],
+    [
+     10,
+     13,
+     0
+    ],
+    [
+     10,
+     6,
+     0
+    ],
+    [
+     10,
+     6,
+     8.0,
+     "R"
+    ],
+    [
+     20,
+     6,
+     8.0
+    ],
+    [
+     20,
+     6,
+     5.0
+    ],
+    [
+     20,
+     20,
+     5.0
+    ]
+   ]
+  ],
+  "stand": [
+   36,
+   2
+  ],
+  "look": [
+   20,
+   20
+  ],
+  "bastion": [
+   20,
+   20
+  ],
+  "kit": {
+   "seed": 216
+  },
+  "arena": true,
+  "zones": [],
+  "pad_r": 13.5
+ }
+}

@@ -1,0 +1,30 @@
+{
+  "id": 1,
+  "grid_size": 46,
+  "fog_bridge": true,
+  "name": "Brückenbaukasten: Vorschau",
+  "note": "4.59 Brückenbaukasten: alle Bauteile nebeneinander (docs/BRUECKEN_BAUKASTEN.md). Lauf 0 Wegvarianten, 1 Ränder, 2 Stützen, 3 Bauplätze, 4 bis 6 Rampe mit Höhenverbindern. Nur Vorschau (scenes/tools/bridge_kit_preview.tscn) und Aufnahmen.",
+  "bridge": {
+    "set": "res://data/levels/strips/moon_bridge.json",
+    "size": 46,
+    "paths": [
+      [[6, 0], [6, 45]],
+      [[14, 0], [14, 45]],
+      [[22, 0], [22, 45]],
+      [[30, 0], [30, 45]],
+      [[39, 0, 0], [39, 13, 0], [39, 31, 2.5], [39, 45, 2.5]]
+    ],
+    "gun": [2, 41],
+    "stand": [22, -8],
+    "look": [22, 18],
+    "kit": {
+      "seed": 3,
+      "runs": {
+        "0": {"path": ["grate", "repair", "tech", "accent", "damaged", "standard", "grate", "repair", "tech", "accent", "damaged"], "edge": ["clean"], "support": ["standard"], "pad": ["standard"]},
+        "1": {"path": ["standard"], "edge": ["open", "grated", "tech", "energy", "broken", "clean"], "support": ["standard"], "pad": ["standard"]},
+        "2": {"path": ["standard"], "edge": ["clean"], "support": ["standard", "reinforced", "tech", "energy", "frame"], "pad": ["standard"]},
+        "3": {"path": ["standard"], "edge": ["clean"], "support": ["standard"], "pad": ["standard", "reinforced", "industrial", "holo"]}
+      }
+    }
+  }
+}

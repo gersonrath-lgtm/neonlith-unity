@@ -1,0 +1,14 @@
+Musik je Welt (ab 3.11) – Platzhalter
+
+Lege hier je Welt einen Titel als Ogg-Vorbis-Datei ab. Er läuft dann automatisch in allen Stufen
+dieser Welt (in Endlosschleife). Fehlt eine Datei, spielt das bisherige Spielthema (theme_game.ogg).
+
+  world_moon.ogg      Mondkrater         Stufen 1–4   (vorhanden: „Moon_Song1“, ab 3.24)
+  world_desert.ogg    Sandmeer           Stufen 5–7
+  world_mars.ogg      Roter Planet       Stufen 8–10
+  world_swamp.ogg     Moorwald           Stufen 11–13
+  world_ice.ogg       Eismond            Stufen 14–16
+  world_obsidian.ogg  Obsidianschlucht   Stufen 17–20
+
+Bosskämpfe behalten theme_boss.ogg, das Hauptmenü theme_menu.ogg (ab 3.24 „Mainmenu_Song“).
+Bitte nur Musik mit passender Lizenz (z. B. CC0 oder eigene Rechte) und die Quelle in CREDITS.txt eintragen.

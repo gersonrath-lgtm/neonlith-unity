@@ -1,0 +1,1 @@
+Hier kommen die Bilder der Gegner hin: <id>.png, z. B. mist_walker.png (IDs siehe docs/GEGNER.md). Fehlt ein Bild, zeigt die Enzyklopädie das Vorschaubild.

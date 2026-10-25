@@ -1,0 +1,28 @@
+{
+ "_class": "EssenceConfig",
+ "_source": "data/essence.tres",
+ "lifetime": 20.0,
+ "blink_time": 5.0,
+ "value_mult": 1.0,
+ "scatter": 0.25,
+ "aim_radius": 0.45,
+ "pickup_range": 16.0,
+ "table_unlimited": true,
+ "fly_time": 0.28,
+ "haptic": 0.35,
+ "color": {
+  "r": 0.62,
+  "g": 0.97,
+  "b": 1.0,
+  "a": 1.0
+ },
+ "glow": {
+  "r": 0.2,
+  "g": 0.8,
+  "b": 1.0,
+  "a": 1.0
+ },
+ "hover": 0.32,
+ "size": 0.11,
+ "max_drops": 160
+}

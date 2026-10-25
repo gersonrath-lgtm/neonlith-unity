@@ -1,0 +1,41 @@
+{
+ "_class": "HoloTheme",
+ "_source": "data/holo_theme.tres",
+ "primary_color": {
+  "r": 0.133,
+  "g": 0.847,
+  "b": 1.0,
+  "a": 1.0
+ },
+ "secondary_color": {
+  "r": 0.039,
+  "g": 0.498,
+  "b": 0.722,
+  "a": 1.0
+ },
+ "accent_color": {
+  "r": 0.608,
+  "g": 0.937,
+  "b": 1.0,
+  "a": 1.0
+ },
+ "warn_color": {
+  "r": 0.86,
+  "g": 0.34,
+  "b": 0.3,
+  "a": 1.0
+ },
+ "line_width": 1.4,
+ "base_opacity": 0.55,
+ "edge_falloff": 0.45,
+ "glow_intensity": 0.3,
+ "grid_cells": 6,
+ "pulse_speed": 0.45,
+ "pulse_strength": 0.12,
+ "animation_duration": 0.32,
+ "upgrade_hold": 2.5,
+ "flash_hold": 0.7,
+ "mr_opacity": 1.45,
+ "mr_line_width": 1.25,
+ "mr_backing": 0.32
+}

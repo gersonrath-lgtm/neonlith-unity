@@ -1,0 +1,34 @@
+{
+ "id": 1,
+ "grid_size": 34,
+ "fog_bridge": true,
+ "bridge": {
+  "set": "res://data/levels/strips/moon_bridge.json",
+  "size": 34,
+  "paths": [
+   [
+    [
+     16,
+     0
+    ],
+    [
+     16,
+     33
+    ]
+   ]
+  ],
+  "gun": [
+   16,
+   26
+  ],
+  "stand": [
+   23,
+   21
+  ],
+  "look": [
+   16,
+   6
+  ],
+  "gun_bridge": true
+ }
+}
