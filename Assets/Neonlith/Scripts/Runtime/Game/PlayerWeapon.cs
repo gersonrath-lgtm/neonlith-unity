@@ -184,6 +184,8 @@ namespace Neonlith.Game
                 foreach (var e in session.EnemiesNear(hit.point, r, true)) session.DamageEnemy(e, Balance.ChargeDamage * chargeMult, "kanzel", true);
                 var direct = hit.collider.GetComponentInParent<Enemy>();
                 if (direct != null && direct.alive && GameSession.Planar(direct.Position, hit.point) > r) session.DamageEnemy(direct, Balance.ChargeDamage * chargeMult, "kanzel", true);
+                var st = hit.collider.GetComponentInParent<ShotTarget>();
+                if (st != null) st.onShot?.Invoke(Balance.ChargeDamage * chargeMult);
                 session.FxRing(hit.point, Balance.ChargeSplash, new Color(1f, 0.3f, 0.2f));
                 _impact.position = hit.point + hit.normal * 0.02f; _impact.gameObject.SetActive(true); _impactT = 0.3f;
             }
@@ -200,6 +202,11 @@ namespace Neonlith.Game
             if (!pressed) { _semiLatch = false; _emptyLatch = false; return; }
             if (arm.semi && _semiLatch) return;
             if (_cooldown > 0f || reloading || charging) return;
+            if (session != null && !session.GunUsable)
+            {
+                if (!_emptyLatch) { _emptyLatch = true; if (_empty != null) _audio.PlayOneShot(_empty, 0.5f); session.Say(session.gunDestroyed ? "Gewehr ausgefallen: Plattform reparieren" : "Reparatur läuft", 1.5f); }
+                return;
+            }
             if (ammo <= 0)
             {
                 if (!_emptyLatch)
@@ -224,6 +231,8 @@ namespace Neonlith.Game
                 end = hit.point;
                 var e = hit.collider.GetComponentInParent<Enemy>();
                 if (e != null && session != null) { session.DamageEnemy(e, arm.damage, "kanzel", true); session.Fire("ship_hit"); }
+                var st = hit.collider.GetComponentInParent<ShotTarget>();
+                if (st != null) st.onShot?.Invoke(arm.damage);
                 _impact.position = hit.point + hit.normal * 0.02f; _impact.gameObject.SetActive(true); _impactT = 0.15f;
             }
             session?.Fire("shot");

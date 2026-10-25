@@ -15,7 +15,13 @@ namespace Neonlith.Game
     /// </summary>
     public sealed class GameSession : MonoBehaviour
     {
-        public const int EnemyLayer = 8, PadLayer = 9, TowerLayer = 10, MenuLayer = 11;
+        public const int EnemyLayer = 8, PadLayer = 9, TowerLayer = 10, MenuLayer = 11, RaidLayer = 12;
+        // Nachschub und Flugaliens (Game: RAID_*, REPAIR_*; Weapon.GUN_HP)
+        const int RaidFirstWave = 2; const float RaidChance = 0.35f, RaidChanceWave = 0.02f, RaidChanceMax = 0.6f;
+        static readonly Vector2 RaidDelay = new Vector2(8f, 20f);
+        const float RaidBoltTime = 0.45f, RaidBoltDmg = 1f; const int RaidReward = 4;
+        const int RepairBase = 80, RepairWave = 10; const float RepairPart = 0.6f, GunHp = 12f, RepairTime = 2.5f, RetaliateCd = 5f;
+        const float RaidRadiusM = 24f, RaidSizeM = 0.9f, PlayerDps = 30f;
         public enum Phase { Intro, Build, Wave, Victory, Defeat }
 
         public MissionData mission;
@@ -36,6 +42,15 @@ namespace Neonlith.Game
         public event System.Action<List<string>> OnBoonOffer;
         public bool offerOpen;                  // Segenskarten offen: Bauzeit steht
         public Tutorial tutorial;
+        public SupplyDrop supply;
+        public readonly List<GunRaider> raiders = new List<GunRaider>();
+        public float gunHp, gunMax, gunRepairT, retaliateCd;
+        public bool gunDestroyed;
+        public int supplyCount, raidCount, raidKills, supplyGold;
+        float _supplyTimer = -1f, _raidTimer = -1f;
+        struct Bolt { public Vector3 from, to; public float t; public GunRaider shooter; public LineRenderer line; }
+        readonly List<Bolt> _bolts = new List<Bolt>();
+        UI.MenuPanel _repairPanel;
         readonly HashSet<string> _seenTypes = new HashSet<string>();
         float _idleT = 18f, _midT;
         bool _leaked, _critical, _heartLeft;
@@ -61,6 +76,7 @@ namespace Neonlith.Game
             s.lives = m.lives + Mathf.RoundToInt(core.Get("lives")) + Mathf.RoundToInt(ship.Get("gun_armor") / 4f);
             s.gold = m.gold + Mathf.RoundToInt(core.Get("start_gold"));
             s._heartLeft = core.Get("second_heart") > 0f;
+            s.gunMax = GunHp + ship.Get("gun_armor"); s.gunHp = s.gunMax;
             s._enemyRoot = new GameObject("Gegner").transform;
             s._towerRoot = new GameObject("Tuerme").transform;
             s._fxRoot = new GameObject("Effekte").transform;
@@ -108,6 +124,10 @@ namespace Neonlith.Game
                 for (var i = enemies.Count - 1; i >= 0; i--) if (i < enemies.Count) enemies[i].Step(dt);
                 foreach (var t in towers) t.Step(dt);
                 for (var i = projectiles.Count - 1; i >= 0; i--) { var p = projectiles[i]; p.Step(dt); if (p.done) projectiles.RemoveAt(i); }
+                StepSupply(dt);
+                StepRaid(dt);
+                if (gunRepairT > 0f) gunRepairT -= dt;
+                if (retaliateCd > 0f) retaliateCd -= dt;
             }
         }
 
@@ -149,6 +169,7 @@ namespace Neonlith.Game
             phase = Phase.Wave;
             countdown = -1f;
             _midT = 0f;
+            PlanSupply(); PlanRaid();
             var radio = Comms.StartText(mission, wave);
             Say($"Welle {wave + 1}/{mission.waves.Count}: {w.title}" + (radio.Length > 0 ? "\n" + Comms.Speaker + ": " + radio : ""), 4f);
             Sfx("wave_start", 0.8f);
@@ -393,6 +414,179 @@ namespace Neonlith.Game
             Sfx("mortar_hit", 0.5f, t.Position);
             Say("Barrikade gebrochen – nach der Welle wird sie repariert", 3f);
         }
+
+        // ------------------------------------------------------------------------------------------------
+        // Nachschub (4.49): Schiff mit Kiste, nur die Spielerwaffe trifft sie
+        public bool SupplyPossible => mission.features.Contains("supply");
+        public bool RaidPossible => mission.features.Contains("raid");
+
+        void PlanSupply()
+        {
+            _supplyTimer = -1f;
+            if (!SupplyPossible || wave < SupplyDrop.FirstWave || supply != null) return;
+            if (Random.value < SupplyDrop.Chance) _supplyTimer = Random.Range(SupplyDrop.Delay.x, SupplyDrop.Delay.y);
+        }
+
+        void StepSupply(float dt)
+        {
+            if (_supplyTimer > 0f && phase == Phase.Wave)
+            {
+                _supplyTimer -= dt;
+                if (_supplyTimer <= 0f) { _supplyTimer = -1f; if (SupplyPossible && supply == null) LaunchSupply(); }
+            }
+            if (supply == null) return;
+            supply.Step(dt);
+            if (supply.Done) { Destroy(supply.gameObject); supply = null; }
+        }
+
+        public void LaunchSupply()
+        {
+            supply = SupplyDrop.Create(this, mission, wave, PlayerDps, WorldTheme.Current);
+            supplyCount++;
+            Say("Nachschub im Anflug! Schieß die Kiste ab.", 3f);
+            Fire("supply");
+        }
+
+        public void SupplyBroken(SupplyDrop d)
+        {
+            var v = Mathf.RoundToInt(d.value * (1f + SkillTrees.Mods("ship").Get("crate_pct")));
+            gold += v; supplyGold += v;
+            Sfx("coin", 0.7f, d.transform.position);
+            FxRing(d.transform.position - Vector3.up * 1.2f, 1.0f, new Color(1f, 0.78f, 0.35f));
+            Say($"Nachschub geborgen: +{v} Essenz", 3f);
+        }
+
+        // Flugaliens (4.49): greifen die Plattform an; Bolzen kosten Panzerung, zerstört = Gewehr stumm bis zur Reparatur
+        void PlanRaid()
+        {
+            _raidTimer = -1f;
+            if (!RaidPossible || wave < RaidFirstWave || raiders.Count > 0) return;
+            var chance = Mathf.Min(RaidChanceMax, RaidChance + RaidChanceWave * wave);
+            if (Random.value < chance) _raidTimer = Random.Range(RaidDelay.x, RaidDelay.y);
+        }
+
+        public Vector3 GunPoint => mission.deckTop + Vector3.up * 1.1f;
+
+        public void LaunchRaid(int count = -1)
+        {
+            var n = count > 0 ? count : Mathf.Clamp(3 + wave / 6, 3, 6);
+            for (var i = 0; i < n; i++) raiders.Add(GunRaider.Create(this, GunPoint, RaidRadiusM, RaidSizeM, PlayerDps, i * Random.Range(0.3f, 0.7f), WorldTheme.Current));
+            raidCount++;
+            Say("Flugaliens greifen die Plattform an!", 3f);
+            Sfx("boss_roar", 0.5f);
+            Fire("raid");
+        }
+
+        void StepRaid(float dt)
+        {
+            if (_raidTimer > 0f && phase == Phase.Wave)
+            {
+                _raidTimer -= dt;
+                if (_raidTimer <= 0f) { _raidTimer = -1f; if (RaidPossible && raiders.Count == 0) LaunchRaid(); }
+            }
+            if (raiders.Count == 0 && _bolts.Count == 0) return;
+            var gp = GunPoint;
+            var ok = !gunDestroyed;
+            for (var i = raiders.Count - 1; i >= 0; i--)
+            {
+                var r = raiders[i];
+                if (r.Step(dt, gp, ok)) FireBolt(r, gp);
+                if (r.Gone) { raiders.RemoveAt(i); Destroy(r.gameObject); }
+            }
+            for (var j = _bolts.Count - 1; j >= 0; j--)
+            {
+                var b = _bolts[j];
+                b.t += dt;
+                var k = Mathf.Clamp01(b.t / RaidBoltTime);
+                var head = Vector3.Lerp(b.from, b.to, k);
+                if (b.line != null) { b.line.SetPosition(0, Vector3.Lerp(b.from, b.to, Mathf.Max(0f, k - 0.12f))); b.line.SetPosition(1, head); }
+                _bolts[j] = b;
+                if (b.t >= RaidBoltTime)
+                {
+                    _bolts.RemoveAt(j);
+                    if (b.line != null) Destroy(b.line.gameObject);
+                    if (!gunDestroyed)
+                    {
+                        XRInput.Haptic(0.6f, 0.1f); XRInput.Haptic(0.6f, 0.1f, false);
+                        Fire("gun_hit");
+                        if (SkillTrees.Mods("ship").Get("gun_retaliate") >= 1f && retaliateCd <= 0f && b.shooter != null && b.shooter.Targetable)
+                        {
+                            retaliateCd = RetaliateCd;
+                            FxLine(gp, b.shooter.transform.position, Balance.TowerColor["sniper"], 0.1f);
+                            RaiderKilledBy(b.shooter);
+                        }
+                        gunHp = Mathf.Max(0f, gunHp - RaidBoltDmg);
+                        if (gunHp <= 0f)
+                        {
+                            gunDestroyed = true;
+                            Sfx("mortar_hit", 0.9f);
+                            Say($"Plattform getroffen! Gewehr ausgefallen. Reparatur: {RepairCost()} Essenz (Tafel über dem Kern)", 5f);
+                            ShowRepairPanel();
+                        }
+                        else Sfx("arrow_hit", 0.5f);
+                    }
+                }
+            }
+        }
+
+        void FireBolt(GunRaider r, Vector3 to)
+        {
+            var go = new GameObject("Bolzen");
+            go.transform.SetParent(_fxRoot, false);
+            var lr = go.AddComponent<LineRenderer>();
+            lr.useWorldSpace = true; lr.positionCount = 2; lr.startWidth = 0.08f; lr.endWidth = 0.04f;
+            lr.sharedMaterial = NeonMaterials.Neon("bolt", WorldTheme.ThreatHi);
+            lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            lr.SetPosition(0, r.transform.position); lr.SetPosition(1, r.transform.position);
+            _bolts.Add(new Bolt { from = r.transform.position, to = to, t = 0f, shooter = r, line = lr });
+            Sfx("zap_shot", 0.4f, r.transform.position);
+        }
+
+        public void RaiderKilled(GunRaider r)
+        {
+            raidKills++;
+            gold += RaidReward;
+            Sfx("mortar_hit", 0.5f, r.transform.position);
+            FxRing(r.transform.position, 0.6f, WorldTheme.Threat);
+            Fire("raider_killed");
+        }
+
+        void RaiderKilledBy(GunRaider r) { r.hp = 0f; r.state = GunRaider.State.Dead; RaiderKilled(r); }
+
+        public int RepairCost()
+        {
+            var mult = Mathf.Max(0.3f, 1f + SkillTrees.Mods("ship").Get("gun_repair"));
+            var full = Mathf.RoundToInt((RepairBase + RepairWave * wave) * mult);
+            if (gunDestroyed) return full;
+            var missing = 1f - gunHp / Mathf.Max(gunMax, 0.01f);
+            return missing <= 0.001f ? 0 : Mathf.Max(5, Mathf.CeilToInt(full * RepairPart * missing));
+        }
+
+        public string RepairGun()
+        {
+            if (gunRepairT > 0f) return "Reparatur läuft";
+            var cost = RepairCost();
+            if (cost <= 0) return "Plattform ist unbeschädigt";
+            if (gold < cost) return $"Reparatur: {cost} Essenz nötig";
+            gold -= cost;
+            gunHp = gunMax; gunDestroyed = false; gunRepairT = RepairTime;
+            Sfx("coin", 0.6f);
+            Say($"Plattform wird repariert (−{cost} Essenz), Gewehr in {RepairTime:0.0} s wieder bereit", 3f);
+            _repairPanel?.Close(); _repairPanel = null;
+            return "";
+        }
+
+        void ShowRepairPanel()
+        {
+            _repairPanel?.Close();
+            _repairPanel = UI.MenuPanel.Show(mission.deckTop + Vector3.up * 1.9f, "Plattform zerstört", new List<(string, System.Action, bool)>
+            {
+                ($"Reparieren   {RepairCost()}", () => { var why = RepairGun(); if (why.Length > 0) Say(why, 2f); }, true),
+            }, 1.4f, 1);
+        }
+
+        /// <summary>Gewehr feuerbereit (Weapon.usable): nicht zerstört und nicht in Reparatur.</summary>
+        public bool GunUsable => !gunDestroyed && gunRepairT <= 0f;
 
         // ------------------------------------------------------------------------------------------------
         // Türme: Zielwahl und Treffer

@@ -60,6 +60,8 @@ namespace Neonlith.UI
                 : s.phase == GameSession.Phase.Victory ? "SIEG" : "NIEDERLAGE";
             var ammoTxt = w == null ? "" : (w.reloading ? $"  Nachladen {Mathf.Clamp01(w.reloadT / w.arm.reload) * 100f:0}%" : $"  {w.arm.name} {w.ammo}/{w.arm.mag}");
             var bossTxt = s.boss != null && s.boss.alive ? $"   {s.boss.type.name} {Mathf.CeilToInt(100f * s.boss.hp / s.boss.maxHp)}%" : "";
+            if (s.gunDestroyed) bossTxt += "   PLATTFORM ZERSTÖRT";
+            else if (s.gunHp < s.gunMax) bossTxt += $"   Plattform {Mathf.CeilToInt(100f * s.gunHp / s.gunMax)}%";
             _text.text = $"{waveTxt}   Kern {s.lives}   Essenz {s.gold}{ammoTxt}{bossTxt}";
             var tut = s.tutorial != null && s.tutorial.visible ? "Gizmo: " + s.tutorial.text + (s.tutorial.label.Length > 0 ? $"  [{s.tutorial.label}]" : "") : "";
             _msg.text = MenuPanel.Wrap(tut.Length > 0 ? tut + (s.MessageNow.Length > 0 ? "\n" + s.MessageNow : "") : s.MessageNow, 70);

@@ -52,6 +52,9 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
   Aufstiege. Wetter je Mission (Wind, Niesel, Nebel, Regen, Gewitter, Sturm): Partikel um den Spieler, Sichtweite,
   Blitze mit Donner, Klangkulisse.
 - **Hände**: Roboterhände über den Controllern (Finger beugen sich mit Abzug und Griff) und Unterarme.
+- **Nachschub und Flugaliens** (ab Mission 3 bzw. 4): Transportschiff mit Kiste quer über die Karte (Abschuss
+  bringt Essenz); Flugaliens schwingen heran, laden auf und schießen Bolzen auf die Plattform; Panzerung, Ausfall des
+  Gewehrs, Reparatur gegen Essenz über eine Tafel am Kern, Vergeltung aus dem Hangar-Baum.
 
 | Eingabe | Wirkung |
 |---|---|

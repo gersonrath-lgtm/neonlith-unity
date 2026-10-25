@@ -76,6 +76,7 @@ namespace Neonlith.Data
         public float bossHp = 0.9f, summonMult = 1f, padR;
         public readonly List<string> towers = new List<string>();
         public readonly List<string> traps = new List<string>();
+        public readonly List<string> features = new List<string>();     // supply, raid, gun_sniper
         public readonly List<BuildPad> pads = new List<BuildPad>();
         public readonly List<Zone> zones = new List<Zone>();
         public string weather = "holo";
@@ -105,6 +106,7 @@ namespace Neonlith.Data
             m.summonMult = (float?)md["summon"] ?? 1f;
             if (md["towers"] is JArray tw) foreach (var t in tw) m.towers.Add((string)t);
             if (md["traps"] is JArray tr) foreach (var t in tr) m.traps.Add((string)t);
+            if (md["features"] is JArray fe) foreach (var t in fe) m.features.Add((string)t);
             if (m.towers.Count == 0) m.towers.AddRange(Balance.DefenseOrder);
 
             var bridge = (JObject)map["bridge"];
