@@ -44,6 +44,14 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
   Wahl per Strahl; alle 25 Karten mit ihren Wirkungen auf die Türme.
 - **Gizmo und Tutorial**: die Begleitdrohne schwebt links vorn, reagiert auf Wellen, Treffer, Bosse, Sieg und
   Niederlage; in Mission 1 führt sie einmal durch Bauen, Wellenstart, Gewehr und Turm-Tafel.
+- **Basis**: Kernsplitter je Mission (Wellen, erster Sieg, Sterne) und alle acht Fertigkeitsbäume (Kern, Gewehr,
+  sechs Türme: Stamm, dann Pfad A oder B, Umskillen) im Pausenmenü unter „Basis“; Wirkungen auf Turmwerte,
+  Kosten, Startessenz, Leben, Einkommen, zweites Herz, Sonderfähigkeiten (Splitterbolzen, Schockfrost, Flächenbrand,
+  Blitzschlag, Hinrichtung, Nachbeben, Permafrost).
+- **Karte**: Tempozonen (schnell, langsam) und Engstellen der Missionen 4, 5, 9, 10, 14, 15, 19, 20; Wände als
+  Aufstiege. Wetter je Mission (Wind, Niesel, Nebel, Regen, Gewitter, Sturm): Partikel um den Spieler, Sichtweite,
+  Blitze mit Donner, Klangkulisse.
+- **Hände**: Roboterhände über den Controllern (Finger beugen sich mit Abzug und Griff) und Unterarme.
 
 | Eingabe | Wirkung |
 |---|---|

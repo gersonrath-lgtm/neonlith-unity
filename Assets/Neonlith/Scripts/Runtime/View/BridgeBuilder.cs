@@ -61,6 +61,28 @@ namespace Neonlith.View
                 neonCore.Ring(lead + Vector3.up * 0.02f, 1.0f * F, 1.25f * F, 24);
             }
 
+            // Zonen (KlarBridge: Beschleunigungsstreifen energierot, Verlangsamungsfelder gedämpft, Engstelle mit Seitenblöcken)
+            var zoneFast = new MeshKit(); var zoneSlow = new MeshKit();
+            foreach (var z in m.zones)
+            {
+                var along = z.b - z.a; along.y = 0f;
+                if (along.sqrMagnitude < 1e-4f) continue;
+                var n = Mathf.Max(1, Mathf.RoundToInt(along.magnitude / (0.5f * F)));
+                for (var i = 0; i < n; i++)
+                {
+                    var p0 = Vector3.Lerp(z.a, z.b, i / (float)n);
+                    var p1 = Vector3.Lerp(z.a, z.b, (i + 0.5f) / n);
+                    if (z.kind == "narrow")
+                    {
+                        metal.Slab(p0, p1, 0.6f * F, 0.9f * F, MissionData.RoadWidth * F * 0.5f - 0.3f * F, 0.9f * F);
+                        metal.Slab(p0, p1, 0.6f * F, 0.9f * F, -(MissionData.RoadWidth * F * 0.5f - 0.3f * F), 0.9f * F);
+                    }
+                    else (z.kind == "fast" ? zoneFast : zoneSlow).Strip(p0, p1, 0.14f * F * MissionData.RoadWidth, 0f, 0.008f);
+                }
+            }
+            zoneFast.Spawn("ZoneSchnell", NeonMaterials.Neon("zone_fast", new Color(0.75f, 0.02f, 0.012f).gamma), root.transform, false);
+            zoneSlow.Spawn("ZoneLangsam", NeonMaterials.Neon("zone_slow", new Color(0.22f, 0.25f, 0.3f).gamma), root.transform, false);
+
             // Kernplatte (BridgeLevel.BASTION_HALF: 5 × 5 Felder) und Kernsäule darunter
             var k = m.core;
             metal.Box(k + Vector3.down * (DeckDepth * 0.5f) + Vector3.up * 0.015f, new Vector3(PlateHalf * 2f, DeckDepth, PlateHalf * 2f));

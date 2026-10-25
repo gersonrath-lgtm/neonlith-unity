@@ -22,6 +22,13 @@ namespace Neonlith.Data
         public readonly List<WaveGroup> groups = new List<WaveGroup>();
     }
 
+    /// <summary>Zone auf einem Weg (4.91): fast/slow (Tempofaktor) oder narrow (Engstelle: alle auf die Mittelspur), Wegstrecke in Metern.</summary>
+    public sealed class Zone
+    {
+        public int path; public string kind; public float d0, d1, f;
+        public Vector3 a, b;      // Endpunkte in Metern (Optik)
+    }
+
     /// <summary>Bauplatz (Damm) oder Sperrplatz (Fahrbahnmitte) in Metern. pathDist: Wegstrecke je Weg (Sperren).</summary>
     public sealed class BuildPad
     {
@@ -70,6 +77,8 @@ namespace Neonlith.Data
         public readonly List<string> towers = new List<string>();
         public readonly List<string> traps = new List<string>();
         public readonly List<BuildPad> pads = new List<BuildPad>();
+        public readonly List<Zone> zones = new List<Zone>();
+        public string weather = "holo";
         public const int Module = 4;           // BridgeLevel.MODULE
         public const int EdgeBlock = 2;        // BridgeLevel.EDGE_BLOCK
         public const float PadOut = 0.09f;     // BridgeLevel.PAD_OUT
@@ -131,7 +140,9 @@ namespace Neonlith.Data
             m.core = ToM(new Vector3(bastionCell.x, bastionH, bastionCell.y));
             m.deckTop = m.core + Vector3.up * ((BermTop + GunRise) * Balance.FieldM);
             m.padR = (float?)bridge["pad_r"] ?? 0f;
+            m.weather = (string)md["weather"] ?? "holo";
             m.BuildPads(bastionCell);
+            if (bridge["zones"] is JArray zs) foreach (var z in zs) m.AddZone((JArray)z);
 
             foreach (var w in (JArray)md["waves"])
             {
@@ -235,6 +246,55 @@ namespace Neonlith.Data
                     }
                 }
             }
+        }
+
+        /// <summary>Zone [Art, [x, z], [x, z], Faktor] auf die Wege legen, die beide Punkte enthalten (BridgeLevel zones_out).</summary>
+        void AddZone(JArray z)
+        {
+            if (z.Count < 3) return;
+            var kind = (string)z[0];
+            var a = ToM(new Vector3((float)z[1][0], 0f, (float)z[1][1]));
+            var b = ToM(new Vector3((float)z[2][0], 0f, (float)z[2][1]));
+            var f = z.Count > 3 ? (float)z[3] : 1f;
+            for (var pi = 0; pi < paths.Count; pi++)
+            {
+                var da = AlongPath(paths[pi], a, out var pa);
+                var db = AlongPath(paths[pi], b, out var pb);
+                if (da < 0f || db < 0f) continue;
+                zones.Add(new Zone { path = pi, kind = kind, d0 = Mathf.Min(da, db), d1 = Mathf.Max(da, db), f = f, a = pa, b = pb });
+            }
+        }
+
+        /// <summary>Wegstrecke des Wegpunkts, der dem Punkt (in der Ebene) am nächsten liegt; -1, wenn weiter als ein Feld entfernt.</summary>
+        static float AlongPath(Vector3[] path, Vector3 p, out Vector3 at)
+        {
+            var best = -1f; var bd = Balance.FieldM * 1.01f; at = p;
+            var cum = 0f;
+            for (var i = 0; i + 1 < path.Length; i++)
+            {
+                var a = path[i]; var b = path[i + 1];
+                var ab = b - a; ab.y = 0f;
+                var ap = p - a; ap.y = 0f;
+                var t = ab.sqrMagnitude > 1e-6f ? Mathf.Clamp01(Vector3.Dot(ap, ab) / ab.sqrMagnitude) : 0f;
+                var q = Vector3.Lerp(a, b, t);
+                var d = Vector2.Distance(new Vector2(q.x, q.z), new Vector2(p.x, p.z));
+                if (d < bd) { bd = d; best = cum + Vector3.Distance(a, b) * t; at = q; }
+                cum += Vector3.Distance(a, b);
+            }
+            return best;
+        }
+
+        public float ZoneFactor(int pid, float dist)
+        {
+            var f = 1f;
+            foreach (var z in zones) if (z.path == pid && z.kind != "narrow" && dist >= z.d0 && dist <= z.d1) f *= z.f;
+            return f;
+        }
+
+        public bool ZoneNarrow(int pid, float dist)
+        {
+            foreach (var z in zones) if (z.path == pid && z.kind == "narrow" && dist >= z.d0 && dist <= z.d1) return true;
+            return false;
         }
 
         static string ModuleKind(int idx)

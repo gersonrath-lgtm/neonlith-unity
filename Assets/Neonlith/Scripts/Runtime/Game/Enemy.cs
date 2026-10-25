@@ -32,7 +32,7 @@ namespace Neonlith.Game
         Vector3[] _path;
         float[] _cum;
         float _total, _baseSpeed, _speedMult = 1f, _bodyScale = 1f;
-        float _dotAcc, _dotT, _flash, _hover, _fade;
+        float _dotAcc, _dotT, _flash, _hover, _fade, _laneHome;
         Renderer _r;
         MaterialPropertyBlock _mpb;
         Transform _bar, _barFill, _shieldVis;
@@ -66,6 +66,7 @@ namespace Neonlith.Game
             var halfBody = (t.halfWidth > 0 ? t.halfWidth : 0.27f * t.size) * e._bodyScale;
             var room = Mathf.Max(0f, MissionData.RoadWidth * 0.5f - 0.35f - halfBody);
             e.lateral = t.boss && t.fillRoad ? 0f : Random.Range(-room, room) * Balance.FieldM;
+            e._laneHome = e.lateral;
             e.dist = atDist;
             e.BuildVisual();
             e.Place();
@@ -160,6 +161,7 @@ namespace Neonlith.Game
             if (slowTime > 0f) s *= 1f - slowAmount;
             if (enraged) s *= type.enrageSpeed;
             if (dashT > 0f) s *= type.dashSpeed;
+            if (session != null && session.mission.zones.Count > 0) s *= session.mission.ZoneFactor(pathId, dist);   // 4.91 Tempozonen
             return s;
         }
 
@@ -237,6 +239,12 @@ namespace Neonlith.Game
                 if (stop < nd) { held = true; nd = Mathf.Max(dist, stop); }
             }
             dist = nd;
+            // Engstelle: alle auf die Mittelspur (weich), danach zurück auf die eigene Spur
+            if (session != null && session.mission.zones.Count > 0)
+            {
+                var want = !flying && session.mission.ZoneNarrow(pathId, dist) ? 0f : _laneHome;
+                lateral = Mathf.MoveTowards(lateral, want, dt * 2.5f);
+            }
             if (dist >= _total)
             {
                 dist = _total;

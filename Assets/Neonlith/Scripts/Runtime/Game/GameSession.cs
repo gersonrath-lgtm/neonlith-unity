@@ -38,7 +38,8 @@ namespace Neonlith.Game
         public Tutorial tutorial;
         readonly HashSet<string> _seenTypes = new HashSet<string>();
         float _idleT = 18f, _midT;
-        bool _leaked, _critical;
+        bool _leaked, _critical, _heartLeft;
+        public int shardsEarned;
 
         struct Spawn { public float time; public string type; public int path; public string elite; }
         readonly List<Spawn> _queue = new List<Spawn>();
@@ -55,8 +56,11 @@ namespace Neonlith.Game
             var go = new GameObject("Session");
             var s = go.AddComponent<GameSession>();
             s.mission = m;
-            s.lives = m.lives;
-            s.gold = m.gold;
+            var core = SkillTrees.Mods("core");
+            var ship = SkillTrees.Mods("ship");
+            s.lives = m.lives + Mathf.RoundToInt(core.Get("lives")) + Mathf.RoundToInt(ship.Get("gun_armor") / 4f);
+            s.gold = m.gold + Mathf.RoundToInt(core.Get("start_gold"));
+            s._heartLeft = core.Get("second_heart") > 0f;
             s._enemyRoot = new GameObject("Gegner").transform;
             s._towerRoot = new GameObject("Tuerme").transform;
             s._fxRoot = new GameObject("Effekte").transform;
@@ -121,7 +125,7 @@ namespace Neonlith.Game
         {
             if (early && countdown > 0f && phase == Phase.Build)
             {
-                var bonus = Mathf.FloorToInt(countdown * Balance.EarlyCallGoldPerSec);
+                var bonus = Mathf.FloorToInt(countdown * Balance.EarlyCallGoldPerSec * (1f + SkillTrees.Mods("core").Get("early_mult")));
                 if (bonus > 0) { gold += bonus; Say($"Früher Start: +{bonus} Essenz", 2f); }
             }
             wave++;
@@ -193,8 +197,9 @@ namespace Neonlith.Game
             var w = mission.waves[wave];
             var income = 0;
             foreach (var t in towers) { t.Repair(); if (t.Kind == "teahouse") income += (int)t.Stats.Get("income"); }
-            var reward = Mathf.RoundToInt(w.reward * Boons.RewardFactor);
+            var reward = Mathf.RoundToInt(w.reward * Boons.RewardFactor * (1f + SkillTrees.Mods("core").Get("reward_pct")));
             gold += reward + income;
+            lives += Mathf.RoundToInt(SkillTrees.Mods("ship").Get("gun_regen"));
             if (Boons.Has("interest")) gold += Mathf.Min(40, Mathf.FloorToInt(gold * 0.1f));
             phaseId++;
             Sfx("wave_clear", 0.7f);
@@ -298,6 +303,12 @@ namespace Neonlith.Game
             _guards.Remove(e);
             if (e == boss) boss = NextBoss();
             lives = Mathf.Max(0, lives - e.damage);
+            if (lives <= 0 && _heartLeft)
+            {
+                _heartLeft = false;
+                lives = Mathf.RoundToInt(SkillTrees.Mods("core").Get("second_heart"));
+                Say("Zweites Herz: der Kern hält mit " + lives + " Leben", 4f);
+            }
             Sfx("life_lost", 0.8f);
             XRInput.Haptic(0.4f, 0.12f);
             Fire("lives_lost");
@@ -439,7 +450,8 @@ namespace Neonlith.Game
         {
             var st = t.Stats;
             var dmg = st.Get("damage");
-            var jr = Balance.ChainJumpRange * Balance.FieldM;
+            if (st.Get("overload") > 0f && Random.value < st.Get("overload")) dmg *= Balance.CritMult;
+            var jr = Balance.ChainJumpRange * st.Get("jump_range", 1f) * Balance.FieldM;
             var hit = new List<Enemy> { first };
             var cur = first;
             while (hit.Count < (int)st.Get("jumps", 1f))
@@ -457,7 +469,12 @@ namespace Neonlith.Game
             var col = Balance.TowerColor["chain"];
             var prev = t.Muzzle;
             foreach (var e in hit) { FxLine(prev, e.Center, col, 0.08f); prev = e.Center; }
-            for (var i = 0; i < hit.Count; i++) DamageEnemy(hit[i], dmg * Mathf.Pow(st.Get("falloff", 0.7f), i), "chain", true);
+            var stun = st.Get("stun_chain");
+            for (var i = 0; i < hit.Count; i++)
+            {
+                DamageEnemy(hit[i], dmg * Mathf.Pow(st.Get("falloff", 0.7f), i), "chain", true);
+                if (stun > 0f && hit[i].alive) Combat.ApplySlow(hit[i], stun, 0.8f);
+            }
         }
 
         public void SniperShot(Tower t, Enemy target)
@@ -465,13 +482,19 @@ namespace Neonlith.Game
             if (!target.alive) return;
             var st = t.Stats;
             var dmg = st.Get("damage");
+            if (st.Get("crit") > 0f && Random.value < st.Get("crit")) dmg *= Balance.CritMult;
             if (target.vulnTime > 0f) dmg *= 1f + target.vulnAmount;
             var real = Combat.DirectDamage(target, dmg, st.Get("armor_pierce"));
             FxLine(t.Muzzle, target.Center, Balance.TowerColor["sniper"], 0.1f);
             var vt = target.vulnTime; target.vulnTime = 0f;
             DamageEnemy(target, real, "sniper", false);
             target.vulnTime = vt;
-            if (target.alive) target.HitFlash();
+            if (target.alive)
+            {
+                target.HitFlash();
+                var ex = st.Get("execute");
+                if (ex > 0f && !target.type.boss && target.hp <= target.maxHp * ex) DamageEnemy(target, target.hp + 1f, "sniper", false);   // Hinrichtung
+            }
         }
 
         public void ProjectileHit(Projectile p)
@@ -485,7 +508,23 @@ namespace Neonlith.Game
                     {
                         var adm = st.Get("damage");
                         if (tgt.IsSlowed) adm *= 1f + Balance.BrittleBonus;
-                        DamageEnemy(tgt, adm, "arrow", true);
+                        var pierce = st.Get("armor_pierce");
+                        if (pierce > 0f)
+                        {
+                            var vm = tgt.vulnTime > 0f ? 1f + tgt.vulnAmount : 1f;
+                            var vt = tgt.vulnTime; tgt.vulnTime = 0f;
+                            DamageEnemy(tgt, Combat.DirectDamage(tgt, adm * vm, pierce), "arrow", false);
+                            tgt.vulnTime = vt;
+                            if (tgt.alive) tgt.HitFlash();
+                        }
+                        else DamageEnemy(tgt, adm, "arrow", true);
+                        var frag = st.Get("fragment");
+                        if (frag > 0f)
+                        {
+                            Enemy best = null; var bd = 1.2f * Balance.FieldM;
+                            foreach (var o in enemies) if (o != tgt && o.alive && o.IsTargetable) { var dd = Planar(o.Position, p.targetPos); if (dd < bd) { bd = dd; best = o; } }
+                            if (best != null) DamageEnemy(best, adm * frag, "arrow", true);
+                        }
                         Sfx("arrow_hit", 0.25f, p.targetPos);
                     }
                     break;
@@ -494,12 +533,16 @@ namespace Neonlith.Game
                     var splash = st.Get("splash") * Balance.FieldM;
                     var hits = splash > 0f ? EnemiesNear(p.targetPos, splash, true) : (tgt != null ? new List<Enemy> { tgt } : new List<Enemy>());
                     if (splash > 0f) FxRing(p.targetPos, st.Get("splash"), new Color(0.7f, 0.92f, 1f));
+                    var brittle = st.Get("brittle_add"); var frz = st.Get("freeze");
                     foreach (var e in hits)
                     {
-                        DamageEnemy(e, st.Get("damage"), "ice", true);
+                        var idm = st.Get("damage");
+                        if (brittle > 0f && e.IsSlowed) idm *= 1f + brittle;
+                        DamageEnemy(e, idm, "ice", true);
                         if (e.alive)
                         {
                             Combat.ApplySlow(e, st.Get("slow"), st.Get("slow_time"));
+                            if (frz > 0f && Random.value < frz) Combat.ApplyFreeze(e, 0.7f);
                             var perma = st.Get("permafrost");
                             if (perma > 0f) { e.vulnAmount = Mathf.Max(e.vulnAmount, perma); e.vulnTime = Mathf.Max(e.vulnTime, st.Get("slow_time") + 0.2f); }
                         }
@@ -513,9 +556,13 @@ namespace Neonlith.Game
                     foreach (var e in EnemiesNear(p.targetPos, r, true))
                     {
                         var dmg = st.Get("damage");
-                        if (e.IsSlowed) { dmg *= 1f + Balance.ThermoShockBonus; e.slowTime = 0f; e.slowAmount = 0f; }
+                        if (e.IsSlowed) { dmg *= 1f + Balance.ThermoShockBonus + st.Get("thermo_add"); e.slowTime = 0f; e.slowAmount = 0f; }
                         DamageEnemy(e, dmg, "fire", true);
-                        if (e.alive) Combat.ApplyBurn(e, st.Get("burn_dps"), st.Get("burn_time"), st.Get("shred"));
+                        if (e.alive)
+                        {
+                            Combat.ApplyBurn(e, st.Get("burn_dps"), st.Get("burn_time"), st.Get("shred"));
+                            if (st.Get("wildfire") > 0f) e.wildfireDmg = Mathf.Max(e.wildfireDmg, st.Get("damage") * st.Get("wildfire"));
+                        }
                     }
                     FxRing(p.targetPos, st.Get("splash"), new Color(1f, 0.7f, 0.3f));
                     Sfx("fire_hit", 0.45f, p.targetPos);
@@ -527,7 +574,8 @@ namespace Neonlith.Game
                     foreach (var e in EnemiesNear(p.targetPos, r, false))
                     {
                         var k = Mathf.Clamp01(Planar(p.targetPos, e.Position) / Mathf.Max(r, 0.001f));
-                        DamageEnemy(e, st.Get("damage") * Mathf.Lerp(1f, Balance.MortarEdgeFactor, k), "mortar", true);
+                        DamageEnemy(e, st.Get("damage") * Mathf.Lerp(1f, st.Get("edge", Balance.MortarEdgeFactor), k), "mortar", true);
+                        if (st.Get("aftershock") > 0f && e.alive) Combat.ApplySlow(e, st.Get("aftershock"), 1.5f);
                     }
                     FxRing(p.targetPos, st.Get("splash"), Balance.TowerColor["mortar"]);
                     Sfx("mortar_hit", 0.5f, p.targetPos);
@@ -599,8 +647,8 @@ namespace Neonlith.Game
             return v;
         }
 
-        public int BuildCost(string kind) => Mathf.RoundToInt(Balance.BuildCost(kind) * Boons.CostFactor);
-        public int UpgradeCost(string kind, int level) { var c = Balance.UpgradeCost(kind, level); return c < 0 ? -1 : Mathf.RoundToInt(c * Boons.CostFactor); }
+        public int BuildCost(string kind) => Mathf.RoundToInt(Balance.BuildCost(kind) * SkillTrees.CostFactor(kind));
+        public int UpgradeCost(string kind, int level) { var c = Balance.UpgradeCost(kind, level); return c < 0 ? -1 : Mathf.RoundToInt(c * SkillTrees.CostFactor(kind)); }
 
         /// <summary>Segenskarte gewählt: Sofortwirkungen hier, Turmwerte über Boons.ApplyMods (Game.take_boon).</summary>
         public void TakeBoon(string id)
@@ -638,7 +686,8 @@ namespace Neonlith.Game
             Sfx("victory", 0.9f);
             PlayMusic("theme_menu");
             Fire("victory");
-            Progress.RecordMission(mission.number, true, mission.lives - lives, mission.lives, Boons.ShardFactor);
+            shardsEarned = Progress.RecordMission(mission.number, mission.chapter, mission.waves.Count, true, mission.lives - lives, mission.lives, Boons.ShardFactor);
+            Say($"{message}\n+{shardsEarned} {Progress.Currency}", 999f);
         }
 
         void Lose()
@@ -650,7 +699,8 @@ namespace Neonlith.Game
             Sfx("defeat", 0.9f);
             PlayMusic("theme_menu");
             Fire("defeat");
-            Progress.RecordMission(mission.number, false, mission.lives - lives, mission.lives, 1f);
+            shardsEarned = Progress.RecordMission(mission.number, mission.chapter, Mathf.Max(0, wave), false, mission.lives - lives, mission.lives, 1f);
+            Say($"{message}\n+{shardsEarned} {Progress.Currency} für {Mathf.Max(0, wave)} geschaffte Wellen", 999f);
         }
 
         public void Say(string text, float seconds) { message = text; messageUntil = Time.time + seconds; }

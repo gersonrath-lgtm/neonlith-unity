@@ -29,7 +29,7 @@ namespace Neonlith.Game
 
         public string Kind => type.id;
         public Vector3 Position => transform.position;
-        public Dictionary<string, float> Stats => Boons.ApplyMods(type.id, Balance.Stats(type.id, level));
+        public Dictionary<string, float> Stats => SkillTrees.Effective(type.id, level);
         public bool IsTrap => type.IsTrap;
         public bool IsDefense => type.IsDefense;
         public bool CanTargetAir => type.air;

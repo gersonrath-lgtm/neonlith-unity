@@ -9,7 +9,7 @@ namespace Neonlith.View
     /// </summary>
     public static class SkyBuilder
     {
-        public static void Apply(WorldTheme t, Transform parent)
+        public static Light Apply(WorldTheme t, Transform parent)
         {
             var sky = Resources.Load<Material>("Materials/Sky_" + t.id);
             RenderSettings.skybox = sky;
@@ -29,6 +29,7 @@ namespace Neonlith.View
             l.color = Color.Lerp(Color.white, t.hi, 0.3f);
             l.intensity = 1.1f;
             l.shadows = LightShadows.None;
+            return l;
         }
 
         /// <summary>Kamera: Himmel aus der Skybox, ohne Skybox-Material die Himmelsfarbe.</summary>

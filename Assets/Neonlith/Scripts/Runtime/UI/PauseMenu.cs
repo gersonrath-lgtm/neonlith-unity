@@ -57,9 +57,56 @@ namespace Neonlith.UI
                 ("Weiter", Resume, true),
                 ("Mission neu starten", () => Load(session.mission.number), true),
                 ("Missionen", OpenMissions, true),
+                ($"Basis: Fertigkeiten ({Progress.Shards} {Progress.Currency})", OpenBase, true),
                 ("Waffe: " + CurrentArmName(), CycleWeapon, true),
                 ("Waffenhand: " + (XRInput.LeftHanded ? "links" : "rechts"), ToggleHand, true),
             });
+        }
+
+        /// <summary>Basis (VRSkillWall): Bäume wählen, Knoten kaufen, Pfad zurücksetzen.</summary>
+        void OpenBase()
+        {
+            Close();
+            var rows = new List<(string, System.Action, bool)>();
+            foreach (var id in SkillTrees.Order)
+            {
+                var t = SkillTrees.Trees[id];
+                var tid = id;
+                var open = id == "core" || id == "ship" || Progress.Won(1);
+                rows.Add(($"{t.title}  ({Progress.SpentInTree(id, false)} Punkte)", () => OpenTree(tid), open));
+            }
+            rows.Add(("Zurück", Reopen, true));
+            _panel = MenuPanel.Show(Spot(), $"Basis: {Progress.Shards} {Progress.Currency}\nStamm, dann ein Pfad A oder B", rows, 2.0f, 2);
+        }
+
+        void OpenTree(string tree)
+        {
+            Close();
+            var t = SkillTrees.Trees[tree];
+            var rows = new List<(string, System.Action, bool)>();
+            foreach (var n in t.nodes)
+            {
+                var nd = n;
+                var r = Progress.Rank(tree, n.id);
+                var cost = Progress.NextCost(tree, n.id);
+                var block = Progress.BuyBlock(tree, n.id);
+                var slot = n.slot == "trunk" ? "Stamm" : (n.slot == "A" ? "A " + t.pathAName : "B " + t.pathBName);
+                var label = $"[{slot}] {n.name} {r}/{n.Ranks}" + (cost > 0 ? $"  {cost}" : "") + "\n" + MenuPanel.Wrap(n.text, 48);
+                rows.Add((label, () =>
+                {
+                    var why = Progress.BuyBlock(tree, nd.id);
+                    if (why.Length > 0) session.Say(why, 3f);
+                    else { Progress.Buy(tree, nd.id); session.Sfx("upgrade", 0.6f); session.Say($"{nd.name} gelernt. Wirkt ab der nächsten Mission.", 3f); }
+                    OpenTree(tree);
+                }, block.Length == 0));
+            }
+            if (Progress.ChosenPath(tree).Length > 0)
+            {
+                var fee = Progress.RespecFee(tree);
+                rows.Add(($"Pfad zurücksetzen (Gebühr {fee})", () => { var back = Progress.Respec(tree); session.Say($"Pfad zurückgesetzt, {back} {Progress.Currency} erstattet", 3f); OpenTree(tree); }, true));
+            }
+            rows.Add(("Zurück", OpenBase, true));
+            _panel = MenuPanel.Show(Spot(), $"{t.building}: {t.title}  ·  {Progress.Shards} {Progress.Currency}" + (t.text.Length > 0 ? "\n" + t.text : ""), rows, 2.4f, 2);
         }
 
         void OpenEnd()

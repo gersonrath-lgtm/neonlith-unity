@@ -22,6 +22,7 @@ namespace Neonlith.Game
         public float reloadT, chargeT;
         public bool charging;
         public int shots;
+        public float chargeMult = 1f;
 
         Transform _muzzle;
         LineRenderer _tracer;
@@ -38,8 +39,19 @@ namespace Neonlith.Game
             var go = new GameObject("Waffe");
             go.transform.SetParent(hand, false);
             var w = go.AddComponent<PlayerWeapon>();
-            w.arm = arm; w.session = session; w.otherHand = otherHand;
-            w.ammo = arm.mag;
+            // Fertigkeiten des Hangars (ship_*): Schaden, Feuerrate, Magazin, Nachladen, Ladeschuss
+            var m = SkillTrees.Mods("ship");
+            var eff = new ArmType
+            {
+                id = arm.id, name = arm.name, semi = arm.semi, twoHand = arm.twoHand, charge = arm.charge, unlockWorld = arm.unlockWorld,
+                damage = arm.damage * (1f + m.Get("ship_dmg")) * (m.Get("ship_twin") >= 1f ? 1.5f : 1f),
+                cooldown = arm.cooldown / (1f + m.Get("ship_rate")),
+                mag = Mathf.RoundToInt(arm.mag * (1f + m.Get("ship_heat"))),
+                reload = arm.reload * Mathf.Max(0.2f, 1f + m.Get("ship_drain")),
+            };
+            w.chargeMult = 1f + 0.5f * m.Get("gun_retaliate");
+            w.arm = eff; w.session = session; w.otherHand = otherHand;
+            w.ammo = eff.mag;
             w.BuildModel(theme);
             w._audio = go.AddComponent<AudioSource>();
             w._audio.spatialBlend = 1f; w._audio.minDistance = 0.5f;
@@ -169,9 +181,9 @@ namespace Neonlith.Game
             {
                 end = hit.point;
                 var r = Balance.ChargeSplash * Balance.FieldM;
-                foreach (var e in session.EnemiesNear(hit.point, r, true)) session.DamageEnemy(e, Balance.ChargeDamage, "kanzel", true);
+                foreach (var e in session.EnemiesNear(hit.point, r, true)) session.DamageEnemy(e, Balance.ChargeDamage * chargeMult, "kanzel", true);
                 var direct = hit.collider.GetComponentInParent<Enemy>();
-                if (direct != null && direct.alive && GameSession.Planar(direct.Position, hit.point) > r) session.DamageEnemy(direct, Balance.ChargeDamage, "kanzel", true);
+                if (direct != null && direct.alive && GameSession.Planar(direct.Position, hit.point) > r) session.DamageEnemy(direct, Balance.ChargeDamage * chargeMult, "kanzel", true);
                 session.FxRing(hit.point, Balance.ChargeSplash, new Color(1f, 0.3f, 0.2f));
                 _impact.position = hit.point + hit.normal * 0.02f; _impact.gameObject.SetActive(true); _impactT = 0.3f;
             }

@@ -51,7 +51,7 @@ namespace Neonlith
             QuestRuntime.Create();
 
             var world = new GameObject("Welt").transform;
-            SkyBuilder.Apply(theme, world);
+            var sun = SkyBuilder.Apply(theme, world);
             BridgeBuilder.Build(Mission, theme).transform.SetParent(world, false);
 
             Session = GameSession.Create(Mission);
@@ -66,6 +66,9 @@ namespace Neonlith
             PauseMenu.Create(Session, Rig.head.transform);
             BoonCeremony.Create(Session, Rig.head.transform);
             BuddyDrone.Create(Rig.head.transform, Session, theme);
+            WeatherFx.Create(Mission.weather, Rig.head.transform, sun, theme);
+            XRHandVisual.Create(Rig.leftHand, Rig.head.transform, true, XRInput.LeftHanded, theme);
+            XRHandVisual.Create(Rig.rightHand, Rig.head.transform, false, !XRInput.LeftHanded, theme);
             Hud.Create(Session, pw, Rig.head.transform);
 
             Debug.Log($"Neonlith: Mission {mission} „{Mission.name}“, Welt {theme.name}, {Mission.waves.Count} Wellen, {Mission.paths.Count} Wege, {Mission.pads.Count} Bauplätze, Deck bei {Mission.deckTop}");
