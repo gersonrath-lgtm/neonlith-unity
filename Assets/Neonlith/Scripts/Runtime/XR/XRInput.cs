@@ -56,6 +56,8 @@ namespace Neonlith.XR
         public static Vector2 TurnStick => (LeftHanded ? LeftStick : RightStick).ReadValue<Vector2>();
         public static float WeaponTrigger => (LeftHanded ? LeftTrigger : RightTrigger).ReadValue<float>();
         public static float ForegripHeld => (LeftHanded ? RightGrip : LeftGrip).ReadValue<float>();
+        public static float OtherTrigger => (LeftHanded ? RightTrigger : LeftTrigger).ReadValue<float>();   // freie Hand: Bauen
+        public static float WeaponGrip => (LeftHanded ? LeftGrip : RightGrip).ReadValue<float>();          // Griff der Waffenhand: Ladeschuss
         public static bool Confirm => ButtonA.IsPressed();          // A: bestätigen, Bau-Modus
         public static bool Back => ButtonB.IsPressed();             // B: zurück
         public static bool StartWave => ButtonX.IsPressed();        // X: Welle starten

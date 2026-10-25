@@ -59,7 +59,8 @@ namespace Neonlith.UI
                 : s.phase == GameSession.Phase.Build || s.phase == GameSession.Phase.Intro ? $"Nächste Welle in {Mathf.CeilToInt(s.countdown)} s"
                 : s.phase == GameSession.Phase.Victory ? "SIEG" : "NIEDERLAGE";
             var ammoTxt = w == null ? "" : (w.reloading ? $"  Nachladen {Mathf.Clamp01(w.reloadT / w.arm.reload) * 100f:0}%" : $"  {w.arm.name} {w.ammo}/{w.arm.mag}");
-            _text.text = $"{waveTxt}   Kern {s.lives}   Essenz {s.essence}{ammoTxt}";
+            var bossTxt = s.boss != null && s.boss.alive ? $"   {s.boss.type.name} {Mathf.CeilToInt(100f * s.boss.hp / s.boss.maxHp)}%" : "";
+            _text.text = $"{waveTxt}   Kern {s.lives}   Essenz {s.gold}{ammoTxt}{bossTxt}";
             _msg.text = s.MessageNow;
         }
     }

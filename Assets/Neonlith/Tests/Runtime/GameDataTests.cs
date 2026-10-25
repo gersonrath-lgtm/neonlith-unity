@@ -56,11 +56,26 @@ namespace Neonlith.Tests
         }
 
         [Test]
-        public void ArmorRuleKeepsQuarter()
+        public void BalanceTablesMatchGodot()
         {
-            var block = Balance.Enemy("block");               // Rüstung 6
-            Assert.AreEqual(28f, Balance.DirectDamage(block, 34f), 0.001f);
-            Assert.AreEqual(1f, Balance.DirectDamage(block, 4f), 0.001f, "mindestens 25 %");
+            Assert.AreEqual(6f, Balance.Enemy("block").armor);
+            Assert.AreEqual(14f, Balance.Stats("arrow", 0)["damage"]);
+            Assert.AreEqual(2f, Balance.Stats("arrow", 2)["targets"]);
+            Assert.AreEqual(60, Balance.BuildCost("arrow"));
+            Assert.AreEqual(75, Balance.UpgradeCost("arrow", 0));
+            Assert.AreEqual(-1, Balance.UpgradeCost("arrow", 2));
+            Assert.IsTrue(Balance.IsTrap("barricade"));
+            Assert.IsTrue(Balance.Enemy("boss_kael").srcMult["ice"] == 0f);
+            Assert.AreEqual(9, Balance.Structures.Count);
+        }
+
+        [Test]
+        public void MissionOneHasBuildPads()
+        {
+            var m = MissionData.Load(1);
+            Assert.Greater(m.pads.Count, 4, "Bauplätze an den Läufen");
+            Assert.IsTrue(m.pads.Exists(p => p.trap), "Sperrplätze auf der Fahrbahn");
+            Assert.IsTrue(m.towers.Contains("arrow"));
         }
 
         [Test]

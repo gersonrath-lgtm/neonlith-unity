@@ -18,6 +18,9 @@
     ],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        { "name": "com.unity.xr.meta-openxr", "expression": "1.0", "define": "NEONLITH_META" },
+        { "name": "com.unity.xr.openxr", "expression": "1.0", "define": "NEONLITH_OPENXR" }
+    ],
     "noEngineReferences": false
 }

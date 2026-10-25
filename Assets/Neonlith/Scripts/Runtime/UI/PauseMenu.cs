@@ -1,0 +1,136 @@
+using System.Collections.Generic;
+using Neonlith.Data;
+using Neonlith.Game;
+using Neonlith.XR;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Neonlith.UI
+{
+    /// <summary>
+    /// Pausenmenü und Missionswahl (VRMenus, VRCampaignMap, Arsenal, Einstellungen auf das Nötige reduziert):
+    /// Menü-Taste pausiert und öffnet eine Tafel vor dem Spieler: Weiter, Mission neu starten, Missionen (1 bis 20
+    /// mit Freischaltung und Sternen), Waffe (Pistole, Sturmgewehr ab Welt I, Sniper ab Welt II), Waffenhand.
+    /// Nach Sieg oder Niederlage öffnet sich die Tafel von selbst (nächste Mission, noch einmal, Missionen).
+    /// </summary>
+    public sealed class PauseMenu : MonoBehaviour
+    {
+        public GameSession session;
+        public Transform head;
+        MenuPanel _panel;
+        bool _menuLatch;
+        GameSession.Phase _seenPhase;
+
+        public static PauseMenu Create(GameSession s, Transform head)
+        {
+            var go = new GameObject("Pausenmenue");
+            var p = go.AddComponent<PauseMenu>();
+            p.session = s; p.head = head; p._seenPhase = s.phase;
+            return p;
+        }
+
+        void Update()
+        {
+            var mnu = XRInput.Pause;
+            if (mnu && !_menuLatch)
+            {
+                if (_panel != null) Resume();
+                else if (session.phase != GameSession.Phase.Victory && session.phase != GameSession.Phase.Defeat) OpenPause();
+            }
+            _menuLatch = mnu;
+            if (session.phase != _seenPhase)
+            {
+                _seenPhase = session.phase;
+                if (session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat) Invoke(nameof(OpenEnd), 2.5f);
+            }
+            _panel?.Face(head);
+        }
+
+        Vector3 Spot() { var f = head.forward; f.y = 0f; f = f.sqrMagnitude > 0.01f ? f.normalized : Vector3.forward; return head.position + f * 1.3f - Vector3.up * 0.55f; }
+
+        void OpenPause()
+        {
+            session.paused = true;
+            session.pauseMenuOpen = true;
+            Show("Pause", new List<(string, System.Action, bool)>
+            {
+                ("Weiter", Resume, true),
+                ("Mission neu starten", () => Load(session.mission.number), true),
+                ("Missionen", OpenMissions, true),
+                ("Waffe: " + CurrentArmName(), CycleWeapon, true),
+                ("Waffenhand: " + (XRInput.LeftHanded ? "links" : "rechts"), ToggleHand, true),
+            });
+        }
+
+        void OpenEnd()
+        {
+            if (_panel != null) return;
+            var won = session.phase == GameSession.Phase.Victory;
+            var n = session.mission.number;
+            var rows = new List<(string, System.Action, bool)>();
+            if (won && n < 20) rows.Add(($"Weiter zu Mission {n + 1}", () => Load(n + 1), true));
+            rows.Add((won ? "Noch einmal" : "Noch einmal versuchen", () => Load(n), true));
+            rows.Add(("Missionen", OpenMissions, true));
+            rows.Add(("Waffe: " + CurrentArmName(), CycleWeapon, true));
+            Show(won ? $"Mission {n} geschafft: {new string('★', Progress.StarsOf(n))}" : "Der Kern ist gefallen", rows);
+        }
+
+        void OpenMissions()
+        {
+            Close();
+            var rows = new List<(string, System.Action, bool)>();
+            for (var n = 1; n <= 20; n++)
+            {
+                var m = n;
+                var open = Progress.Unlocked(n);
+                var stars = Progress.StarsOf(n);
+                var label = open ? $"{n}  {new string('★', stars)}{new string('☆', 3 - stars)}" : $"{n}  gesperrt";
+                rows.Add((label, () => Load(m), open));
+            }
+            rows.Add(("Zurück", () => { Close(); if (session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat) OpenEnd(); else OpenPause(); }, true));
+            _panel = MenuPanel.Show(Spot(), "Missionen: vier Welten, je fünf Level", rows, 2.0f, 4);
+        }
+
+        string CurrentArmName()
+        {
+            var id = Progress.Weapon;
+            return Balance.Arms.TryGetValue(id, out var a) ? a.name : "Pistole";
+        }
+
+        void CycleWeapon()
+        {
+            var order = new[] { "pistol", "rifle", "sniper" };
+            var i = System.Array.IndexOf(order, Progress.Weapon);
+            for (var k = 1; k <= order.Length; k++)
+            {
+                var id = order[(i + k) % order.Length];
+                if (Balance.Arms[id].unlockWorld <= Progress.WorldsDone()) { Progress.Weapon = id; break; }
+            }
+            var locked = Balance.Arms.TryGetValue(order[(i + 1) % order.Length], out var next) && next.unlockWorld > Progress.WorldsDone();
+            session.Say(locked ? $"{next.name} wird nach Welt {next.unlockWorld} frei" : $"Waffe: {CurrentArmName()} (gilt ab der nächsten Mission)", 3f);
+            Reopen();
+        }
+
+        void ToggleHand()
+        {
+            Progress.LeftHanded = !Progress.LeftHanded;
+            session.Say("Waffenhand gilt ab der nächsten Mission", 3f);
+            Reopen();
+        }
+
+        void Reopen() { var end = session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat; Close(); if (end) OpenEnd(); else OpenPause(); }
+
+        void Show(string title, List<(string, System.Action, bool)> rows) { Close(); _panel = MenuPanel.Show(Spot(), title, rows, 1.6f, 1); }
+
+        void Resume() { Close(); session.paused = false; session.pauseMenuOpen = false; }
+
+        void Close() { _panel?.Close(); _panel = null; }
+
+        void Load(int mission)
+        {
+            Close();
+            Bootstrap.nextMission = mission;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+}

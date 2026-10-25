@@ -16,27 +16,48 @@ noch **kein portiertes Spiel**, sondern:
 Der Plan für den eigentlichen Port, die Abbildung der Godot-Konzepte und die Reihenfolge der Etappen stehen in
 `Docs/UNITY_PORT.md`.
 
-## Erster spielbarer Stand
+## Spielstand des Ports
 
-Mission 1 bis 20 aus `campaign.json` laufen als Ego-Shooter auf der Quest 3: Brücke der Mission aus den Kartendaten
-(Läufe, Dämme, Leuchtlinien, Knotenplatten, Kernplatte, Standdeck), Himmel der Welt, Spieler in Lebensgröße auf dem
-Standdeck (Gehen mit dem linken Stick, Drehen in 30°-Stufen mit dem rechten, Begrenzung auf das Deck), Pistole in der
-Waffenhand (Abzug feuert, Waffe nach unten = nachladen, Vibration), Gegner aus den Wellen der Mission laufen die Wege
-zum Kern, Leben am Kern, Sieg nach der letzten Welle, Niederlage bei null Leben, HUD vor dem Blick, Funk, Musik und
-Klänge aus dem Godot-Projekt. Alles entsteht aus Code (`Bootstrap`), die Szene enthält nur ein Objekt.
+Mission 1 bis 20 aus `campaign.json` laufen als Ego-Shooter-Tower-Defense auf der Quest 3, mit den Regeln des
+Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
+
+- **Welt**: Brücke der Mission aus den Kartendaten (Läufe, Dämme, Leuchtlinien, Knotenplatten, Kernplatte,
+  Standdeck, Wände), Himmel und Farben der Welt, Nebel.
+- **Spieler**: steht in Lebensgröße auf dem Standdeck, Gehen mit dem linken Stick, Drehen in 30°-Stufen, Begrenzung
+  auf das Deck; Foveation Stufe 2, 90 Hz (Meta-OpenXR), Auflösung 1,2, AutoRes.
+- **Waffenarsenal**: Pistole (ein Schuss je Abzug), Sturmgewehr (Dauerfeuer, Ladeschuss mit dem Griff, zweite Hand
+  am Vordergriff), Sniper (breiter Strahl); Magazin, Nachladen mit der Waffe nach unten, Vibration; Freischaltung
+  nach Welt I und II, Wahl im Menü.
+- **Türme und Bauen**: Bauplätze aus den Läufen (Modulraster, pad_r), Sperrplätze auf der Fahrbahn; die freie Hand
+  trägt einen Strahl: auf einem Bauplatz öffnet der Abzug das Baumenü mit den Türmen der Mission (Gatling,
+  Kryo-Blaster, Plasmawerfer, Tesla-Spule, Railgun, Raketenwerfer, Generator; Barrikade, Laserzaun), auf einem Turm
+  die Turm-Tafel (Ausbau, Verkauf, Zielwahl). Zielwahl, Geschosse mit Bogen, Kettenblitz, Railgun-Treffer,
+  Flächenschaden, Verlangsamung, Brand mit Rüstungsbruch, Thermoschock, Spröde, Barrikaden mit Dornen, Laserzaun,
+  Generator-Einkommen, Verkauf (70 %, in derselben Bauphase 100 %), früher Start mit Bonus.
+- **Gegner**: alle Arten mit Fähigkeiten (Hetzer-Sprint, Schilder-Abschirmung, Nebelweberin-Heilung, Spieher legt
+  Türme lahm, Packträger platzt, Flieger), Eliten (Schildträger, Phantom, Unbeugsam, Signalschatten), Bosse
+  (Rufe, Wut, Regeneration, Immunitäten), Lebensfaktor je Welle nach `run.gd`.
+- **Ablauf**: Funk, Countdown, Wellen, Leben am Kern, Sieg und Niederlage, Pausenmenü (Weiter, neu starten,
+  Missionen mit Freischaltung und Sternen, Waffe, Waffenhand), Spielstand in `progress.json`.
 
 | Eingabe | Wirkung |
 |---|---|
 | Linker Stick | Gehen (2,2 m/s, kopfrelativ) |
 | Rechter Stick | Drehen in Stufen von 30° |
-| Abzug (rechts) | Feuer; Pistole: ein Schuss je Abzug |
-| Waffe nach unten | Nachladen (0,9 s) |
-| X | nächste Welle sofort |
-| Menü-Taste (links) | Pause |
-| A | nach Sieg oder Niederlage neu starten |
+| Abzug (Waffenhand) | Feuer |
+| Griff (Waffenhand) | Sturmgewehr: Ladeschuss laden, loslassen feuert |
+| Griff (freie Hand) | zweite Hand am Vordergriff |
+| Abzug (freie Hand) | Strahl: Bauplatz → Baumenü, Turm → Turm-Tafel, Knopf wählen |
+| Waffe nach unten | Nachladen |
+| A | Bau-Modus: alle Bauplätze zeigen |
+| B | Menü schließen |
+| X | nächste Welle sofort (Bonus-Essenz) |
+| Menü-Taste (links) | Pause und Menü |
 
-Noch nicht dabei (Reihenfolge in `Docs/UNITY_PORT.md`): Türme und Bauen, Sperren, Eliten, Bosslogik, Rook und
-Hände, Buddy-Drohne, Hub und Menüs, Fertigkeiten, Spielstände, die eigenen Shader (Fernberuhigung, Holo), Wetter.
+Noch nicht dabei (Reihenfolge in `Docs/UNITY_PORT.md`): Segenskarten, Buddy-Drohne Gizmo und Tutorial, Rook und
+Hände, Hub und Halle der Tore, Fertigkeitsbäume mit Kernsplittern, Zonen und Wandläufe der Gegner, Nachschub und
+Raider, Wetter, die eigenen Shader (Fernberuhigung, Holo), Ladebild als OpenXR-Ebene, die reichen Modelle der
+Türme, Gegner und Waffen (vorerst Formen aus Kästen und Prismen).
 
 ## Öffnen und bauen
 
