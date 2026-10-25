@@ -91,7 +91,12 @@ namespace Neonlith.Editor
                 m.SetFloat("_Metallic", 0.55f);
                 m.SetFloat("_Smoothness", 0.45f);
             });
-            Material(MatDir + "/Neon.mat", "Universal Render Pipeline/Unlit", null);
+            // eigener Neon-Shader mit Fernberuhigung, sonst URP/Unlit
+            var neonShader = Shader.Find("Neonlith/Neon");
+            Material(MatDir + "/Neon.mat", neonShader != null && neonShader.isSupported ? "Neonlith/Neon" : "Universal Render Pipeline/Unlit", m =>
+            {
+                if (m.HasProperty("_FarStart")) { m.SetFloat("_FarStart", 40f); m.SetFloat("_FarEnd", 120f); }
+            });
             foreach (var t in WorldTheme.Themes)
             {
                 var texPath = $"Assets/Neonlith/Art/Textures/space_sky_{t.id}.png";
@@ -268,8 +273,8 @@ namespace Neonlith.Editor
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var go = new GameObject("Bootstrap");
             var b = go.AddComponent<Bootstrap>();
-            b.mission = 1;
-            b.weapon = "pistol";
+            b.mission = 0;            // Halle der Tore
+            b.weapon = "auto";
             EditorSceneManager.SaveScene(scene, ScenePath);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
             Debug.Log("Neonlith: Szene " + ScenePath + " angelegt und in die Build Settings eingetragen.");

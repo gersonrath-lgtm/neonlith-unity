@@ -52,6 +52,10 @@ Godot-Projekts (Balance, Kampf, Gegner, Türme 1:1 übernommen):
   Aufstiege. Wetter je Mission (Wind, Niesel, Nebel, Regen, Gewitter, Sturm): Partikel um den Spieler, Sichtweite,
   Blitze mit Donner, Klangkulisse.
 - **Hände**: Roboterhände über den Controllern (Finger beugen sich mit Abzug und Griff) und Unterarme.
+- **Halle der Tore**: Start in der Nabe mit vier Toren (Norden I bis Westen IV, offen mit Fenster und Balkon,
+  verschlossen mit Schloss in der Weltfarbe), Zeigen hebt hervor, Abzug gleitet hindurch; auf dem Balkon die fünf
+  Missionen der Welt mit Sternen und Startabfrage (JA | NEIN); Lauftafel (Splitter, Sterne, Waffe) und Turmwand
+  (Basis) in den Diagonalen; Funk der Halle. Ladeschleier vor jedem Wechsel.
 - **Nachschub und Flugaliens** (ab Mission 3 bzw. 4): Transportschiff mit Kiste quer über die Karte (Abschuss
   bringt Essenz); Flugaliens schwingen heran, laden auf und schießen Bolzen auf die Plattform; Panzerung, Ausfall des
   Gewehrs, Reparatur gegen Essenz über eine Tafel am Kern, Vergeltung aus dem Hangar-Baum.
@@ -89,8 +93,8 @@ Türme, Gegner und Waffen (vorerst Formen aus Kästen und Prismen).
       (sonst entfällt das Subsampling der Foveation), als Pipeline in Graphics und allen Quality-Stufen.
    4. XR Plug-in Management: OpenXR für Android; OpenXR: Multiview, kein Depth-Submit, Oculus Touch Controller
       Profile, Hand Interaction Profile, Meta-Quest-Features, Foveated Rendering.
-   5. Szene `Scenes/Bootstrap.unity` mit dem Objekt `Bootstrap` (Mission, Waffe, Linkshänder einstellbar), als
-      einzige Szene in den Build Settings.
+   5. Szene `Scenes/Bootstrap.unity` mit dem Objekt `Bootstrap` (0 = Halle der Tore, 1 bis 20 = Mission direkt;
+      Waffe, Linkshänder einstellbar), als einzige Szene in den Build Settings.
    Jeder Schritt steht auch einzeln im Menü. Was ein Schritt nicht per Skript schafft, meldet er im Log mit dem Ort
    in den Project Settings; vor dem ersten Build einmal *Project Settings → XR Plug-in Management* (Android: OpenXR
    angekreuzt) und *OpenXR* (Profile und Meta-Features) nachsehen.

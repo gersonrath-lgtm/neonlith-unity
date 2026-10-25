@@ -16,8 +16,8 @@ namespace Neonlith
     [DefaultExecutionOrder(-1000)]
     public sealed class Bootstrap : MonoBehaviour
     {
-        [Tooltip("Mission 1..20 (campaign.json); bestimmt Karte, Wellen und Weltfarbe")]
-        [Range(1, 20)] public int mission = 1;
+        [Tooltip("0 = Halle der Tore, 1..20 = Mission (campaign.json)")]
+        [Range(0, 20)] public int mission = 0;
 
         [Tooltip("Waffe: pistol, rifle, sniper (Arsenal); auto = gespeicherte Wahl")]
         public string weapon = "auto";
@@ -26,8 +26,8 @@ namespace Neonlith
         public bool leftHanded = false;
 
         public static Bootstrap Instance { get; private set; }
-        /// <summary>Mission für den nächsten Szenenstart (Pausenmenü, Missionswahl); 0 = Feld der Szene.</summary>
-        public static int nextMission;
+        /// <summary>Ziel des nächsten Szenenstarts: -1 = Feld der Szene, 0 = Halle, 1..20 = Mission.</summary>
+        public static int nextMission = -1;
         public MissionData Mission { get; private set; }
         public GameSession Session { get; private set; }
         public XRRig Rig { get; private set; }
@@ -40,14 +40,15 @@ namespace Neonlith
             GameData.ClearCache();
             ShaderGlobals.ApplyDefaults();
 
-            if (nextMission > 0) { mission = nextMission; nextMission = 0; }
+            if (nextMission >= 0) { mission = nextMission; nextMission = -1; }
+            XRInput.Init();
+            XRInput.LeftHanded = leftHanded || Progress.LeftHanded;
+            if (mission <= 0) { StartHub(); return; }
             Mission = MissionData.Load(mission);
             if (Mission == null) return;
             WorldTheme.Index = WorldTheme.WorldOfMission(mission);
             var theme = WorldTheme.Current;
             ShaderGlobals.ApplyWorld(theme);
-            XRInput.Init();
-            XRInput.LeftHanded = leftHanded || Progress.LeftHanded;
             QuestRuntime.Create();
 
             var world = new GameObject("Welt").transform;
@@ -70,8 +71,29 @@ namespace Neonlith
             XRHandVisual.Create(Rig.leftHand, Rig.head.transform, true, XRInput.LeftHanded, theme);
             XRHandVisual.Create(Rig.rightHand, Rig.head.transform, false, !XRInput.LeftHanded, theme);
             Hud.Create(Session, pw, Rig.head.transform);
+            LoadVeil.Create(Rig.head.transform);
 
             Debug.Log($"Neonlith: Mission {mission} „{Mission.name}“, Welt {theme.name}, {Mission.waves.Count} Wellen, {Mission.paths.Count} Wege, {Mission.pads.Count} Bauplätze, Deck bei {Mission.deckTop}");
+        }
+
+        /// <summary>Halle der Tore: Nabe mit vier Toren, Lauftafel und Turmwand (HubSession).</summary>
+        void StartHub()
+        {
+            QuestRuntime.Create();
+            WorldTheme.Index = 1;
+            var theme = WorldTheme.Current;
+            ShaderGlobals.ApplyWorld(theme);
+            var world = new GameObject("Welt").transform;
+            SkyBuilder.Apply(theme, world);
+            RenderSettings.fog = false;
+            Rig = XRRig.Create(Vector3.zero, 4f * 1.4f - 0.3f, Vector3.back);
+            SkyBuilder.SetupCamera(Rig.head, theme);
+            var hub = HubSession.Create(Rig);
+            hub.pauseMenu = PauseMenu.Create(null, Rig.head.transform);
+            XRHandVisual.Create(Rig.leftHand, Rig.head.transform, true, XRInput.LeftHanded, theme);
+            XRHandVisual.Create(Rig.rightHand, Rig.head.transform, false, !XRInput.LeftHanded, theme);
+            LoadVeil.Create(Rig.head.transform);
+            Debug.Log("Neonlith: Halle der Tore");
         }
     }
 }

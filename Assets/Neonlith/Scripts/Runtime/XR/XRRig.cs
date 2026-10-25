@@ -30,6 +30,15 @@ namespace Neonlith.XR
         Vector3 _lookAt;
         float _originRetry;
 
+        /// <summary>Standplatz verlegen (Halle: Nabe oder Balkon). follow = der Spieler gleitet mit (Nabe fährt unter ihm weg).</summary>
+        public void SetCenter(Vector3 center, bool follow)
+        {
+            if (follow) transform.position += center - _center;
+            _center = center;
+        }
+
+        public void SetRadius(float r) => _radius = r;
+
         public static XRRig Create(Vector3 floorCenter, float radius, Vector3 lookAt)
         {
             XRInput.Init();

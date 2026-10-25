@@ -3,7 +3,6 @@ using Neonlith.Data;
 using Neonlith.Game;
 using Neonlith.XR;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Neonlith.UI
 {
@@ -25,9 +24,13 @@ namespace Neonlith.UI
         {
             var go = new GameObject("Pausenmenue");
             var p = go.AddComponent<PauseMenu>();
-            p.session = s; p.head = head; p._seenPhase = s.phase;
+            p.session = s; p.head = head; p._seenPhase = s != null ? s.phase : GameSession.Phase.Intro;
             return p;
         }
+
+        bool Ended => session != null && (session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat);
+        void Notify(string text, float secs) { if (session != null) session.Say(text, secs); else HubSession.Instance?.Say(text, secs); }
+        void Sound(string name, float vol) { if (session != null) session.Sfx(name, vol); else HubSession.Instance?.Sfx(name, vol); }
 
         void Update()
         {
@@ -35,13 +38,13 @@ namespace Neonlith.UI
             if (mnu && !_menuLatch)
             {
                 if (_panel != null) Resume();
-                else if (session.phase != GameSession.Phase.Victory && session.phase != GameSession.Phase.Defeat) OpenPause();
+                else if (!Ended) OpenPause();
             }
             _menuLatch = mnu;
-            if (session.phase != _seenPhase)
+            if (session != null && session.phase != _seenPhase)
             {
                 _seenPhase = session.phase;
-                if (session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat) Invoke(nameof(OpenEnd), 2.5f);
+                if (Ended) Invoke(nameof(OpenEnd), 2.5f);
             }
             _panel?.Face(head);
         }
@@ -50,21 +53,25 @@ namespace Neonlith.UI
 
         void OpenPause()
         {
-            session.paused = true;
-            session.pauseMenuOpen = true;
-            Show("Pause", new List<(string, System.Action, bool)>
+            if (session != null) { session.paused = true; session.pauseMenuOpen = true; }
+            var rows = new List<(string, System.Action, bool)> { ("Weiter", Resume, true) };
+            if (session != null)
             {
-                ("Weiter", Resume, true),
-                ("Mission neu starten", () => Load(session.mission.number), true),
+                rows.Add(("Mission neu starten", () => Load(session.mission.number), true));
+                rows.Add(("Zur Halle der Tore", () => Load(0), true));
+            }
+            rows.AddRange(new List<(string, System.Action, bool)>
+            {
                 ("Missionen", OpenMissions, true),
                 ($"Basis: Fertigkeiten ({Progress.Shards} {Progress.Currency})", OpenBase, true),
                 ("Waffe: " + CurrentArmName(), CycleWeapon, true),
                 ("Waffenhand: " + (XRInput.LeftHanded ? "links" : "rechts"), ToggleHand, true),
             });
+            Show(session != null ? "Pause" : "Halle der Tore", rows);
         }
 
         /// <summary>Basis (VRSkillWall): Bäume wählen, Knoten kaufen, Pfad zurücksetzen.</summary>
-        void OpenBase()
+        public void OpenBase()
         {
             Close();
             var rows = new List<(string, System.Action, bool)>();
@@ -95,15 +102,15 @@ namespace Neonlith.UI
                 rows.Add((label, () =>
                 {
                     var why = Progress.BuyBlock(tree, nd.id);
-                    if (why.Length > 0) session.Say(why, 3f);
-                    else { Progress.Buy(tree, nd.id); session.Sfx("upgrade", 0.6f); session.Say($"{nd.name} gelernt. Wirkt ab der nächsten Mission.", 3f); }
+                    if (why.Length > 0) Notify(why, 3f);
+                    else { Progress.Buy(tree, nd.id); Sound("upgrade", 0.6f); Notify($"{nd.name} gelernt. Wirkt ab der nächsten Mission.", 3f); }
                     OpenTree(tree);
                 }, block.Length == 0));
             }
             if (Progress.ChosenPath(tree).Length > 0)
             {
                 var fee = Progress.RespecFee(tree);
-                rows.Add(($"Pfad zurücksetzen (Gebühr {fee})", () => { var back = Progress.Respec(tree); session.Say($"Pfad zurückgesetzt, {back} {Progress.Currency} erstattet", 3f); OpenTree(tree); }, true));
+                rows.Add(($"Pfad zurücksetzen (Gebühr {fee})", () => { var back = Progress.Respec(tree); Notify($"Pfad zurückgesetzt, {back} {Progress.Currency} erstattet", 3f); OpenTree(tree); }, true));
             }
             rows.Add(("Zurück", OpenBase, true));
             _panel = MenuPanel.Show(Spot(), $"{t.building}: {t.title}  ·  {Progress.Shards} {Progress.Currency}" + (t.text.Length > 0 ? "\n" + t.text : ""), rows, 2.4f, 2);
@@ -117,6 +124,7 @@ namespace Neonlith.UI
             var rows = new List<(string, System.Action, bool)>();
             if (won && n < 20) rows.Add(($"Weiter zu Mission {n + 1}", () => Load(n + 1), true));
             rows.Add((won ? "Noch einmal" : "Noch einmal versuchen", () => Load(n), true));
+            rows.Add(("Zur Halle der Tore", () => Load(0), true));
             rows.Add(("Missionen", OpenMissions, true));
             rows.Add(("Waffe: " + CurrentArmName(), CycleWeapon, true));
             Show(won ? $"Mission {n} geschafft: {new string('★', Progress.StarsOf(n))}" : "Der Kern ist gefallen", rows);
@@ -134,7 +142,7 @@ namespace Neonlith.UI
                 var label = open ? $"{n}  {new string('★', stars)}{new string('☆', 3 - stars)}" : $"{n}  gesperrt";
                 rows.Add((label, () => Load(m), open));
             }
-            rows.Add(("Zurück", () => { Close(); if (session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat) OpenEnd(); else OpenPause(); }, true));
+            rows.Add(("Zurück", () => { Close(); if (Ended) OpenEnd(); else OpenPause(); }, true));
             _panel = MenuPanel.Show(Spot(), "Missionen: vier Welten, je fünf Level", rows, 2.0f, 4);
         }
 
@@ -144,7 +152,7 @@ namespace Neonlith.UI
             return Balance.Arms.TryGetValue(id, out var a) ? a.name : "Pistole";
         }
 
-        void CycleWeapon()
+        public void CycleWeapon()
         {
             var order = new[] { "pistol", "rifle", "sniper" };
             var i = System.Array.IndexOf(order, Progress.Weapon);
@@ -154,30 +162,29 @@ namespace Neonlith.UI
                 if (Balance.Arms[id].unlockWorld <= Progress.WorldsDone()) { Progress.Weapon = id; break; }
             }
             var locked = Balance.Arms.TryGetValue(order[(i + 1) % order.Length], out var next) && next.unlockWorld > Progress.WorldsDone();
-            session.Say(locked ? $"{next.name} wird nach Welt {next.unlockWorld} frei" : $"Waffe: {CurrentArmName()} (gilt ab der nächsten Mission)", 3f);
-            Reopen();
+            Notify(locked ? $"{next.name} wird nach Welt {next.unlockWorld} frei" : $"Waffe: {CurrentArmName()} (gilt ab der nächsten Mission)", 3f);
+            if (_panel != null) Reopen();
         }
 
-        void ToggleHand()
+        public void ToggleHand()
         {
             Progress.LeftHanded = !Progress.LeftHanded;
-            session.Say("Waffenhand gilt ab der nächsten Mission", 3f);
-            Reopen();
+            Notify("Waffenhand gilt ab der nächsten Mission", 3f);
+            if (_panel != null) Reopen();
         }
 
-        void Reopen() { var end = session.phase == GameSession.Phase.Victory || session.phase == GameSession.Phase.Defeat; Close(); if (end) OpenEnd(); else OpenPause(); }
+        void Reopen() { var end = Ended; Close(); if (end) OpenEnd(); else OpenPause(); }
 
         void Show(string title, List<(string, System.Action, bool)> rows) { Close(); _panel = MenuPanel.Show(Spot(), title, rows, 1.6f, 1); }
 
-        void Resume() { Close(); session.paused = false; session.pauseMenuOpen = false; }
+        void Resume() { Close(); if (session != null) { session.paused = false; session.pauseMenuOpen = false; } }
 
         void Close() { _panel?.Close(); _panel = null; }
 
         void Load(int mission)
         {
             Close();
-            Bootstrap.nextMission = mission;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            XR.LoadVeil.Load(mission, mission > 0 ? $"Mission {mission}" : "Halle der Tore");
         }
     }
 }
